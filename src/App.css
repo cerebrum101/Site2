@@ -1,0 +1,127 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.button {
+  display: inline-block;
+  /* Makes the link behave like a button */
+  padding: 10px 20px;
+  /* Adds padding */
+  background-color: #007bff;
+  /* Button background color */
+  color: white;
+  /* Text color */
+  text-decoration: none;
+  /* Removes underline */
+  border-radius: 5px;
+  /* Rounds the corners */
+  transition: background-color 0.3s;
+  /* Smooth transition for hover effect */
+  margin: 10px;
+  /* Adds margin around the button for spacing */ /* Adds margin around the button for spacing */
+}
+
+
+.button:hover {
+  background-color: #0056b3;
+  /* Darker background on hover */
+}
+
+.whatsapp-button {
+  background-color: #25D366;
+  /* WhatsApp green */
+}
+
+.whatsapp-button:hover {
+  background-color: #128C7E;
+  /* Darker green on hover */
+}
+
+
+
+.filter-group {
+  font-family: "Arial", sans-serif;
+  text-align: left;
+  padding: 20px;
+  background-color: #f4f7fa;
+  /* Light background similar to the reference */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for a polished look */
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+/* Title styles */
+.filter-title {
+  color: #2d3a45;
+  /* Dark blue-gray color for the title */
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Button container */
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allows wrapping for smaller screens */
+  gap: 12px;
+  /* Space between buttons */
+}
+
+/* Button styles */
+.filter-button {
+  background-color: #ffffff;
+  /* White background */
+  color: #2d3a45;
+  /* Dark text */
+  border: 2px solid #e3e9ef;
+  /* Light gray border */
+  border-radius: 20px;
+  /* Rounded edges */
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+}
+
+/* Hover effect */
+.filter-button:hover {
+  background-color: #eaf1f7;
+  /* Slightly darker blue-gray on hover */
+  border-color: #c5d3e0;
+  /* Darker border on hover */
+}
+
+/* Active button styles */
+.filter-button.active {
+  background-color: #2d3a45;
+  /* Dark blue-gray background for active */
+  color: #ffffff;
+  /* White text for active */
+  border-color: #2d3a45;
+  /* Match border to background */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  /* Slightly stronger shadow */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .filter-button {
+    font-size: 12px;
+    /* Slightly smaller font for small screens */
+    padding: 8px 16px;
+  }
+
+  .filter-title {
+    font-size: 20px;
+    /* Adjust title size */
+  }
+}
