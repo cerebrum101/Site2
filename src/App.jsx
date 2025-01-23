@@ -59,9 +59,9 @@ function Button({ url, name }) {
 }
 
 function TelegramButton({ message }) {
-  const telegramUsername = "ataywork"; // Replace with your actual username or bot name
-  const preGeneratedMessage = `Здравствуйте, я заинтересован в подготовке по теме ${message}`;
-  const url = `https://t.me/${telegramUsername}?start=${encodeURIComponent(preGeneratedMessage)}`; // Updated to use the correct format
+  const telegramUrl = "https://t.me/ataywork"; // Telegram share URL
+  const preGeneratedMessage = `Здравствуйте, я заинтересован в подготовке по теме ${message}`; // Pre-generated message
+  const url = `${telegramUrl}?text=${encodeURIComponent(preGeneratedMessage)}`; // Corrected URL structure
 
   return (
     <Button url={url} name="Telegram" className="button telegram-button" />
