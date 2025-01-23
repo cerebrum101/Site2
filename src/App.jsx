@@ -1,7 +1,7 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import Router components
+import About from './about'; // Import the About component
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
@@ -9,7 +9,8 @@ function App() {
   const [selectedCategory2, setSelectedCategory2] = useState(""); // State for the second menu
 
   
-  const subjects1 = [
+  const subjects1 = 
+  [
     "ЕНТ",
     "СОР/СОЧ",
     "Олимпиады",
@@ -19,6 +20,17 @@ function App() {
     "NUET"
     
   ];
+
+  const prices ={
+    "ЕНТ": "4000", 
+    "СОР/СОЧ": "4000",
+    "Олимпиады": "5000",
+    "Вступительный экзамен": "4500",
+    "Для себя": "4500",
+    "SAT": "5000",
+    "NUET": "5000",
+  }
+
   const subjects2 = ["Математика", "Физика", "Информатика", "Другое" ];
 
   const handleSelect1 = (category) => {
@@ -29,22 +41,49 @@ function App() {
     setSelectedCategory2(category);
   };
   
-  let text_message = `${selectedCategory1} ${selectedCategory2}`;
+  const text_message = `${selectedCategory1} ${selectedCategory2}`;
+
+  // Ensure prices are displayed correctly based on selected categories
+  const priceDisplay = selectedCategory2 ? prices[selectedCategory2] : "Не выбрано";
 
   return (
-    <>
-      <h1>Записаться на занятия</h1>
-      <p>Выбрано: {text_message}</p>
-      <FilterMenu title="Выберите предмет" categories={subjects2}  onSelecet={handleSelect1}/>
-      <FilterMenu title="Выберите категорию" categories={subjects1} onSelecet={handleSelect2} />
+    <Router>
+        <NavBar />
+          <Routes>
+            <Route path='/' element = { <div>
+              <h1>Записаться на занятия</h1>
+              <p>Выбрано: {text_message}</p>
+              <p>Цена: {priceDisplay} ₸/ час</p>              
+              <FilterMenu title="Выберите предмет" categories={subjects2}  onSelecet={handleSelect1}/>
+              <FilterMenu title="Выберите категорию" categories={subjects1} onSelecet={handleSelect2} />
 
-      <div className="home-buttons">
-        <TelegramButton message={text_message} />
-        <WhatsAppButton message={text_message} />
-      </div>
-    </>
+
+              <div className="home-buttons">
+                <TelegramButton message={text_message} />
+                <WhatsAppButton message={text_message} />
+              </div>
+              </div>
+            } />
+
+          <Route path="/about" element={<About />} /> 
+          {/* You can add more routes here if needed */}
+        </Routes>
+    </Router>
   )
 }
+
+function NavBar() {
+  return (
+    <nav className="navbar">
+      <ul>
+        <li><a href="/">Записаться</a></li>
+        <li><a href="/about">Обо мне</a></li>
+        {/* <li><a href="/contact">Контакты</a></li> */}
+      </ul>
+    </nav>);
+
+}
+
 
 
 
