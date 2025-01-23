@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import Router components
-import About from './about'; // Import the About component
+import About from './About'; // Import the About component
 import { useState } from 'react'
 import './App.css'
 
