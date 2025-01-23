@@ -61,7 +61,7 @@ function Button({ url, name }) {
 function TelegramButton({ message }) {
   const telegramUrl = "https://t.me/ataywork"; // Telegram share URL
   const preGeneratedMessage = `Здравствуйте, я заинтересован в подготовке по теме ${message}`; // Pre-generated message
-  const url = `${telegramUrl}?url=&text=${encodeURIComponent(preGeneratedMessage)}`;
+  const url = `${telegramUrl}?text=${encodeURIComponent(preGeneratedMessage)}`; // Corrected URL structure
 
   return (
     <Button url={url} name="Telegram" className="button telegram-button" />
