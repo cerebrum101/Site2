@@ -2,14 +2,23 @@ import React from 'react';
 import './styles/about.css';
 
 function About() {
+	const newLocal = <Block
+		name={"Mentorship Club"}
+		date={"2022 - 2023"}
+		place={"Оффлайн"}
+		points={[
+			'Провел более 100 часов занятий по математике и физике для 20+ учеников из разных школ.',
+		]}
+		cl={"block"} />;
 	return (
 		<div className="about-container">
 			<div className="about-header">
 				<h1>Меня зовут Атай</h1>
-				
 			</div>
 
-			<div className="about-content">
+			<h2 className='about-subtitle'>Образование</h2>
+			<div className="about-content-split">
+				
 				<Block 
 					name={"РФМШ"}
 					date={"2021 - 2023"}
@@ -26,28 +35,95 @@ function About() {
 					cl={"block"}
 				/>
 
-
-				{/* <div className="about-section">
-					<h2>Репетиторство</h2>
-					<ul>
-						<li>4+ лет  практики</li>
-						<li>Поднял 15+ ученикам по предметам: алгебра, геометрия, физика, информатика.</li>
-						<li>Занимался с ученикамы с гос. школ и спец. школ: РФМШ, Haileybury, БИЛ, НИШ.</li>
-					</ul>
-				</div>
-
-				<div className="about-section">
-					<h2>Опыт</h2>
-					<ul>
-						<li>4+ лет  практики</li>
-						<li>Поднял 15+ ученикам по предметам: алгебра, геометрия, физика, информатика.</li>
-						<li>Занимался с ученикамы с гос. школ и спец. школ: РФМШ, Haileybury, БИЛ, НИШ.</li>
-					</ul>
-				</div> */}
 			</div>
+
+
+			<h2 className='about-subtitle'>Опыт и Некоммерческая Деятельность</h2>
+			<div className="about-content">
+
+				<Block
+					name={"OLSCIENCE CIRCLES"}
+					date={"Май - Ноябрь 2023"}
+					place={"Гибридный Формат"}
+					points={['Руководитель математического направления для 6-9 классов',
+						"Управлял командой из 10 менторов",
+						"более 30 уроков, 60+ часов онлайн-обучения для 50 учеников",
+						"2 офлайн-олимпиадных лагеря по теории чисел и комбинаторике для 70+ учеников ",
+					]}
+					cl={"block"}
+				/>
+
+				<Block
+					name={"Makerspace Astana Math Club"}
+					date={"Август - Октябрь 2022"}
+					place={"Онлайн"}
+					points={[
+						"Сотрудничал с American Corner Astana", 
+						"12-недельная программа для 6–9 классов по олимпиадной математике",
+						'Разработал учебную программу, материалы для курса и домашние задания',
+						'Ученики прокачались с 0 до уровня Областной Олимпиады 9 класса.',
+						
+					]}
+					cl={"block"}
+				/>
+
+				<Block 
+					name={"Beyond Curriculum Public Foundation"}
+					date={"Март 2024 - н.в. "}
+					place={"Гибридный Формат"}
+					points={[
+						"Действующий Член Фонда",
+						"Член оргкомитета в 4 конкурсах международного уровня",
+						'Организационный менеджер мероприятий',
+
+					]}
+					cl={"block"}
+				/>
+
+				<Block
+					name={"Fizmat Academy"}
+					date={"Июнь 2023 "}
+					place={"Оффлайн"}
+					points={[
+						"Ментор, Волонтер",
+						'Обучил ключевым математическим и логическим темам для вступительных экзаменов в РФМШ, НИШ и БИЛ.',
+						"Провел обучение  60+ учащихся 6-х классов в 4 группах",
+						'48+ часов занятий за 2 недели',
+						'Более 50% учеников добились желаемого результата',
+					]}
+					cl={"block"}
+				/>
+
+			</div>
+
+			<h2 className='about-subtitle'>Тесты и Экзамены</h2>
+			<div className="about-content tests" >
+				{
+					tests.map((test, index) => (
+						<div 
+						className="block small-block"
+						key={index}
+						>
+							{test}
+						</div>
+					))
+				}
+
+			</div>
+
 		</div>
+
+
 	);
 };
+
+const tests = [
+	'SAT 1480',
+	'IELTS 7.5',
+	'NUET 181',
+	'ЕНТ физ-мат 120',
+	'ЕНТ инф-мат 118'
+]
 
 const Block = ({ name, date, place, points, cl}) => {
 	return (
@@ -62,6 +138,8 @@ const Block = ({ name, date, place, points, cl}) => {
 		</div>
 	);
 };
+
+
 
 
 

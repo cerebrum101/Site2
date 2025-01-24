@@ -1,7 +1,7 @@
 .about-container {
 	max-width: 800px;
 	margin: 0 auto;
-	padding: 20px;
+	padding: 20px 0;
 	font-family: Arial, sans-serif;
 	color: #333;
 }
@@ -21,9 +21,23 @@
 	font-size: 1.2em;
 }
 
+.about-subtitle {
+	color: #f9f9f9;
+}
 .about-content {
 	display: grid;
 	gap: 20px;
+}
+.tests{
+	display: flex;
+
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.about-content-split {
+	display: grid;
+	gap: 40px;
 
 	grid-template-columns: 1fr 1fr;
 }
@@ -98,8 +112,7 @@
 }
 
 .block-small{
-	width: 40%;
-
+	width: auto;
 }
 
 .title {
