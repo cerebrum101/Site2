@@ -35,11 +35,21 @@
 	justify-content: center;
 	flex-wrap: wrap;
 }
+
+
 .about-content-split {
 	display: grid;
 	gap: 40px;
 
 	grid-template-columns: 1fr 1fr;
+}
+@media screen and (max-width: 630px) {
+	.about-content-split {
+		display: flex;
+		/* Change to flex layout on smaller screens */
+		flex-direction: column;
+		/* Stack items vertically */
+	}
 }
 
 
