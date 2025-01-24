@@ -141,6 +141,4 @@ const Block = ({ name, date, place, points, cl}) => {
 
 
 
-
-
 export default About;
