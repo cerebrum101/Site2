@@ -57,7 +57,11 @@ function App() {
               <FilterMenu title="Выберите предмет" categories={subjects2}  onSelecet={handleSelect1}/>
               <FilterMenu title="Выберите категорию" categories={subjects1} onSelecet={handleSelect2} />
 
-
+              <iframe src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Asia%2FAlmaty&showPrint=0&mode=WEEK&hl=ru&showDate=0&showNav=0&showTitle=0&showCalendars=0&showTabs=0&title=Atay%20Public%20Cal&src=YXRheWtpbXdvcmtAZ21haWwuY29t&color=%23039BE5" 
+              style={{ borderWidth: 0 }} 
+              className='calendar' 
+              frameborder="0">
+              </iframe>
               <div className="home-buttons">
                 <TelegramButton message={text_message} />
                 <WhatsAppButton message={text_message} />
