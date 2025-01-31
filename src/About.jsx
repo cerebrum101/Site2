@@ -1,5 +1,57 @@
 import React from 'react';
 import './styles/about.css';
+import { useState } from 'react';
+import logoOlscience from './assets/logo_olscience.png';
+import logoAmCorn from './assets/logo_amcorner.png';
+import logoBeyond from './assets/logo_bc.png';
+import logoAPHB from './assets/logo_aphb.svg';
+import logoNSPM from './assets/logo_fizmat.png';
+import logoCabo from './assets/logo_cabo.svg';
+import logoFizmatAcademy from './assets/logo_fizmat_academy.png';
+import logoNU from './assets/logo_nu1.jpg';
+
+
+
+
+const tests = [
+	'SAT 1480',
+	'IELTS 7.5',
+	'NUET 181',
+	'ЕНТ физ-мат 120',
+	'ЕНТ инф-мат 118'
+]
+
+const Block = ({ name, date, place, points, cl, coverImg }) => {
+	const [isVisible, setIsVisible] = useState(false);
+
+	const handleClick = () => {
+		setIsVisible(!isVisible);
+	}
+
+	return (
+		<div className={cl} onClick={handleClick}>
+			{!isVisible ? (
+				<img src={coverImg} 
+				alt={''} 
+				className='cover-image'
+				
+				/>
+			) : (
+				<> 
+				<h2 className="title">{name}</h2>
+				<p className="details"> <span className='date'> {date}  </span> | {place}</p>
+				<ul className="points">
+					{points.map((point, index) => (
+						<li key={index}>{point}</li>
+					))}
+				</ul>
+				</>
+			)}
+			
+
+		</div>
+	);
+};
 
 function About() {
 	const newLocal = <Block
@@ -25,6 +77,8 @@ function About() {
 					place={"Астана"}
 					points={["Средний балл: 4.86/5.00"]}
 					cl={"block"}
+
+					coverImg={logoNSPM}
 				/>
 
 				<Block
@@ -33,6 +87,8 @@ function About() {
 					place={"Астана"}
 					points={["NUFYP", "BSc in Mathematics"]}
 					cl={"block"}
+
+					coverImg={logoNU}
 				/>
 
 			</div>
@@ -51,6 +107,8 @@ function About() {
 						"2 офлайн-олимпиадных лагеря по теории чисел и комбинаторике для 70+ учеников ",
 					]}
 					cl={"block"}
+					coverImg={logoOlscience}
+				
 				/>
 
 				<Block
@@ -65,6 +123,7 @@ function About() {
 						
 					]}
 					cl={"block"}
+					coverImg={logoAmCorn}
 				/>
 
 				<Block 
@@ -78,6 +137,8 @@ function About() {
 
 					]}
 					cl={"block"}
+					coverImg={logoBeyond}
+					
 				/>
 
 				<Block
@@ -92,6 +153,7 @@ function About() {
 						'Более 50% учеников добились желаемого результата',
 					]}
 					cl={"block"}
+					coverImg={logoFizmatAcademy}
 				/>
 
 			</div>
@@ -117,27 +179,9 @@ function About() {
 	);
 };
 
-const tests = [
-	'SAT 1480',
-	'IELTS 7.5',
-	'NUET 181',
-	'ЕНТ физ-мат 120',
-	'ЕНТ инф-мат 118'
-]
 
-const Block = ({ name, date, place, points, cl}) => {
-	return (
-		<div className={cl}>
-			<h2 className="title">{name}</h2>
-			<p className="details"> <span className='date'> {date}  </span> | {place}</p>
-			<ul className="points">
-				{points.map((point, index) => (
-					<li key={index}>{point}</li>
-				))}
-			</ul>
-		</div>
-	);
-};
+
+
 
 
 

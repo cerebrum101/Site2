@@ -174,3 +174,10 @@
 .date {
 	color: #4caf50
 }
+
+.cover-image{
+	display: block;
+
+	max-width: 700px;
+
+}
