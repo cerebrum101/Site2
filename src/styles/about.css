@@ -119,6 +119,10 @@
 	display: flex;
 	flex-direction: column;
 	align-items: start;
+
+	position: relative;  /* Add this */
+    overflow: hidden;   /* Add this */
+	cursor: pointer; 
 }
 
 .block-small{
@@ -177,7 +181,11 @@
 
 .cover-image{
 	display: block;
-
-	max-width: 700px;
-
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

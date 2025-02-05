@@ -7,7 +7,7 @@ import logoBeyond from './assets/logo_bc.png';
 import logoAPHB from './assets/logo_aphb.svg';
 import logoNSPM from './assets/logo_fizmat.png';
 import logoCabo from './assets/logo_cabo.svg';
-import logoFizmatAcademy from './assets/logo_fizmat_academy.png';
+import logoFizmatAcademy from './assets/fizmat_academy.jpg';
 import logoNU from './assets/logo_nu1.jpg';
 
 
@@ -21,7 +21,7 @@ const tests = [
 	'ЕНТ инф-мат 118'
 ]
 
-const Block = ({ name, date, place, points, cl, coverImg }) => {
+const Block = ({ name, date, place, points, cl, coverImg, scale = 1 }) => {
 	const [isVisible, setIsVisible] = useState(false);
 
 	const handleClick = () => {
@@ -29,12 +29,21 @@ const Block = ({ name, date, place, points, cl, coverImg }) => {
 	}
 
 	return (
-		<div className={cl} onClick={handleClick}>
+		<div className={cl} onClick={handleClick}
+		style={{ 
+			height: '220px',
+			overflow: 'hidden',
+        	position: 'relative',
+		}}
+		
+		>
 			{!isVisible ? (
-				<img src={coverImg} 
-				alt={''} 
-				className='cover-image'
-				
+				<img 
+
+				src={coverImg} 
+                alt={''} 
+                className='cover-image'
+                style={{ transform: `translate(-50%, -50%) scale(${scale})` }} // Modify transform
 				/>
 			) : (
 				<> 
@@ -79,6 +88,8 @@ function About() {
 					cl={"block"}
 
 					coverImg={logoNSPM}
+
+					scale={1.28}
 				/>
 
 				<Block
@@ -89,6 +100,8 @@ function About() {
 					cl={"block"}
 
 					coverImg={logoNU}
+
+					scale={1.3}
 				/>
 
 			</div>
@@ -108,6 +121,8 @@ function About() {
 					]}
 					cl={"block"}
 					coverImg={logoOlscience}
+					
+					// scale={0.8}
 				
 				/>
 
@@ -124,6 +139,8 @@ function About() {
 					]}
 					cl={"block"}
 					coverImg={logoAmCorn}
+
+					scale={1.60}
 				/>
 
 				<Block 
@@ -154,6 +171,8 @@ function About() {
 					]}
 					cl={"block"}
 					coverImg={logoFizmatAcademy}
+
+					scale={1}
 				/>
 
 			</div>
