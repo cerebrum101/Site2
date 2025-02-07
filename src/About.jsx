@@ -1,14 +1,28 @@
-import React from 'react';
 import './styles/about.css';
-import { useState } from 'react';
-import logoOlscience from './assets/logo_olscience.png';
-import logoAmCorn from './assets/logo_amcorner.png';
-import logoBeyond from './assets/logo_bc.png';
-import logoAPHB from './assets/logo_aphb.svg';
-import logoNSPM from './assets/logo_fizmat.png';
-import logoCabo from './assets/logo_cabo.svg';
-import logoFizmatAcademy from './assets/fizmat_academy.jpg';
-import logoNU from './assets/logo_nu1.jpg';
+import React, { useState, useEffect } from 'react';
+import logoOlscience from './assets/olscience.png';
+import logoOlscienceSm from './assets/olscience_sm.png';
+import logoAmCorn from './assets/americancorners.png';
+// import logoAmCornSm from './assets/americancorners_sm.png';
+import logoBeyond from './assets/beyond.png';
+import logoBeyondSm from './assets/bc_sm.png';
+import logoAPHB from './assets/aphb.png';
+import logoAPHBSm from './assets/aphb_sm.svg';
+import logoNSPM from './assets/nspm.png';
+import logoCabo from './assets/cabo.png';
+import logoCaboSm from './assets/cabo_sm.png';
+import logoFizmatAcademy from './assets/fizmatacademy.png';
+import logoFizmatAcademySm from './assets/fizmatacademy_sm.png';
+import logoNU from './assets/nu.png';
+
+
+
+
+
+
+
+
+
 
 
 
@@ -21,19 +35,26 @@ const tests = [
 	'ЕНТ инф-мат 118'
 ]
 
-const Block = ({ name, date, place, points, cl, coverImg, scale = 1 }) => {
+const Block = ({ name, date, place, points, cl, coverImg, altImg, scale = 1, ratio = '3/1', isSquareBlock = false }) => {
 	const [isVisible, setIsVisible] = useState(false);
+	// const [currentImage, setCurrentImage] = useState(coverImg);
 
 	const handleClick = () => {
-		setIsVisible(!isVisible);
-	}
+        setIsVisible(!isVisible);
+    };
 
+
+	
 	return (
 		<div className={cl} onClick={handleClick}
+		
 		style={{ 
-			height: '220px',
+			aspectRatio: window.innerWidth > 780 ? ratio : 'auto',
 			overflow: 'hidden',
-        	position: 'relative',
+			position: 'relative',
+			minHeight: window.innerWidth <= 780 ? '200px' : 'auto',
+			backgroundColor: isVisible ? '#1a1a1a' : (window.innerWidth <= 780 ? '#242424': '#1a1a1a'),
+			boxShadow: isVisible ? '0 4px 8px rgba(0, 0, 0, 0.2)' : 'none'
 		}}
 		
 		>
@@ -89,7 +110,9 @@ function About() {
 
 					coverImg={logoNSPM}
 
-					scale={1.28}
+					ratio='1/1'
+
+					isSquareBlock = {true}
 				/>
 
 				<Block
@@ -101,7 +124,10 @@ function About() {
 
 					coverImg={logoNU}
 
-					scale={1.3}
+					ratio='1/1'
+
+					isSquareBlock = {true}
+
 				/>
 
 			</div>
@@ -140,7 +166,6 @@ function About() {
 					cl={"block"}
 					coverImg={logoAmCorn}
 
-					scale={1.60}
 				/>
 
 				<Block 
@@ -164,7 +189,7 @@ function About() {
 					place={"Оффлайн"}
 					points={[
 						"Ментор, Волонтер",
-						'Обучил ключевым математическим и логическим темам для вступительных экзаменов в РФМШ, НИШ и БИЛ.',
+						'Обучил ключевым математическим и логическим темам для вступительных в РФМШ, НИШ и БИЛ.',
 						"Провел обучение  60+ учащихся 6-х классов в 4 группах",
 						'48+ часов занятий за 2 недели',
 						'Более 50% учеников добились желаемого результата',
@@ -172,7 +197,7 @@ function About() {
 					cl={"block"}
 					coverImg={logoFizmatAcademy}
 
-					scale={1}
+					// scale={1}
 				/>
 
 			</div>

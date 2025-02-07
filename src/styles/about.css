@@ -120,10 +120,21 @@
 	flex-direction: column;
 	align-items: start;
 
+
+
 	position: relative;  /* Add this */
     overflow: hidden;   /* Add this */
 	cursor: pointer; 
 }
+
+@media screen and (max-width: 780px) {
+    .block {
+        padding: 8px;
+		height: auto;
+		aspect-ratio: none;
+    }
+}
+
 
 .block-small{
 	width: auto;
