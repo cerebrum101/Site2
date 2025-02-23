@@ -101,7 +101,7 @@ export default function Grid() {
       description: "",
       header: <Skeleton icon={<IconMessage className="h-24 w-24 text-neutral-500" />} />,
       className: "md:col-span-1",
-      routeLink: "/"
+      routeLink: "/contact"
     },
     {
       title: "Проекты",
