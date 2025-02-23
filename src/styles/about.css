@@ -1,19 +1,32 @@
+@import "tailwindcss";
+
 .about-container {
-	max-width: 800px;
+	max-width: 70vw;
 	margin: 0 auto;
-	padding: 20px 0;
+	padding: 2rem;
 	font-family: Arial, sans-serif;
 	color: #333;
 }
+@media screen and (max-width: 700px) {
+	.about-container {
+		max-width: none;
+	}
+}
+
+
 
 .about-header {
 	text-align: center;
-	margin-bottom: 30px;
+	margin-bottom: 3rem;
 	color: #f9f9f9;
+	padding: 0 1rem;
+	font-weight: 800;
 }
 
 .about-header h1 {
-	font-size: 2.5em;
+	font-size: 2.5rem;
+	font-weight: 500;
+	color: white;
 	margin-bottom: 10px;
 }
 
@@ -22,36 +35,50 @@
 }
 
 .about-subtitle {
-	color: #f9f9f9;
+	font-size: 1.75rem;
+	font-weight: 500;
+	color: white;
+	margin: 2rem 0 1rem;
+	padding: 0 1rem;
 }
+
 .about-content {
 	display: grid;
-	gap: 20px;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
 }
+
 .tests{
 	display: flex;
-
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
 }
 
-
 .about-content-split {
 	display: grid;
-	gap: 40px;
-
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1.5rem;
+	margin-bottom: 2rem;
 }
-@media screen and (max-width: 630px) {
+
+@media screen and (max-width: 780px) {
 	.about-content-split {
-		display: flex;
-		/* Change to flex layout on smaller screens */
-		flex-direction: column;
-		/* Stack items vertically */
+		grid-template-columns: 1fr;
+	}
+	
+	.about-header h1 {
+		font-size: 2rem;
+	}
+	
+	.about-subtitle {
+		font-size: 1.5rem;
+	}
+	
+	.block {
+		min-height: auto;
 	}
 }
-
 
 .about-section {
 	background-color: #f9f9f9;
@@ -100,94 +127,56 @@
 	}
 }
 
-
 .block {
-
 	background-color: #1a1a1a;
-	/* Dark gray background */
-	color: #ffffff;
-	/* White text */
-	padding: 1rem;
-	/* Adjusted padding for a compact layout */
-	border-radius: 4px;
-	/* Slightly rounded corners */
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	/* Subtle shadow */
-	font-family: "Arial", sans-serif;
-	/* Clean, readable font */
-
-	display: flex;
-	flex-direction: column;
-	align-items: start;
-
-
-
-	position: relative;  /* Add this */
-    overflow: hidden;   /* Add this */
-	cursor: pointer; 
-}
-
-@media screen and (max-width: 780px) {
-    .block {
-        padding: 8px;
-		height: auto;
-		aspect-ratio: none;
-    }
-}
-
-
-.block-small{
-	width: auto;
-}
-
-.title {
-	font-size: 1.3rem;
-	/* Adjusted title size */
-	font-weight: 600;
-	/* Slightly lighter weight than bold */
-	margin-bottom: 0rem;
-	/* Reduced bottom margin */
-}
-
-.details {
-	font-size: 0.95rem;
-	/* Slightly smaller font */
-	color: #b0b0b0;
-	/* Light gray for muted appearance */
-	margin-bottom: 0rem;
-	/* Spacing between details and points */
-}
-
-.points {
-	list-style-type: none;
-	/* Remove default bullets */
-	padding-left: 0;
-	/* Align text with the block */
-	font-size: 0.85rem;
-	/* Smaller font for list items */
-}
-
-.points li {
-	position: relative;
-	margin-bottom: 0rem;
-	padding-left: 1.2rem;
-	/* Indent text for custom bullets */
+	border-radius: 8px;
+	transition: transform 0.2s ease-in-out;
 	text-align: left;
 }
 
-.points li::before {
-	content: "•";
-	/* Custom bullet point */
-	position: absolute;
-	left: 0;
-	color: #4caf50;
-	/* Green bullet color */
-	font-size: 1rem;
-	/* Slightly larger bullet size */
+.block:hover {
+	transform: translateY(-2px);
 }
 
-.date {
-	color: #4caf50
+.block .title {
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: white;
+	margin-bottom: 0.5rem;
+	text-align: left;
+}
+
+.block .details {
+	font-size: 0.9rem;
+	color: #4CAF50;
+	margin-bottom: 1rem;
+	text-align: left;
+}
+
+.block .details .date {
+	color: #4CAF50;
+}
+
+.block .points {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	color: #ddd;
+	text-align: left;
+}
+
+.block .points li {
+	position: relative;
+	padding-left: 1rem;
+	margin-bottom: 0.5rem;
+	line-height: 1.4;
+}
+
+.block .points li::before {
+	content: "•";
+	position: absolute;
+	left: 0;
+	color: #4CAF50;
 }
 
 .cover-image{
@@ -199,4 +188,49 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+/* Add these new styles */
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.award-block {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.award-block:hover {
+  transform: translateY(-2px);
+}
+
+.award-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.award-date {
+  font-size: 0.9rem;
+  color: #4CAF50;
+  margin-bottom: 0.75rem;
+}
+
+.award-description {
+  color: #ddd;
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 780px) {
+  .awards-grid {
+    grid-template-columns: 1fr;
+  }
 }
