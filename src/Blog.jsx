@@ -35,7 +35,9 @@ const Blog = () => {
 
   return (
     <div className="blog-container">
-      <h1>Блог</h1>
+      <h1 className="text-4xl font-bold text-center text-white mb-12 mt-12">
+        Блог
+      </h1>
       <div className="blog-posts">
         {posts.map((post, index) => (
           <BlogPost
