@@ -36,7 +36,7 @@ export const BentoGridItem = ({
     <div
       onClick={handleClick || DefaultHandleClick}
       className={cn(
-        "relative row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent flex flex-col items-center justify-center space-y-4",
+        "relative row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent flex flex-col items-center justify-center",
         className
       )}>
       <GlowingEffect
@@ -47,7 +47,7 @@ export const BentoGridItem = ({
         inactiveZone={0.01}
       />
       {header}
-      <div className="group-hover/bento:translate-x-2 transition duration-200">
+      <div className="group-hover/bento:translate-x-2 transition duration-200 mt-4">
         {icon}
         <div className="font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2">
           {title}

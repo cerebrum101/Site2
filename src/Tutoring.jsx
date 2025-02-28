@@ -58,9 +58,9 @@ function Tutoring() {
       <iframe 
         src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Asia%2FAlmaty&showPrint=0&mode=WEEK&hl=ru&showDate=0&showNav=0&showTitle=0&showCalendars=0&showTabs=0&title=Atay%20Public%20Cal&src=YXRheWtpbXdvcmtAZ21haWwuY29t&color=%23039BE5" 
         style={{ border: 0 }}
-        className='w-full max-w-full aspect-[4/3] md:aspect-[16/9] mb-6 rounded-lg shadow-md' 
+        className='w-full max-w-3xl mx-auto aspect-[4/3] md:aspect-[16/9] mb-6 rounded-lg shadow-md' 
       />
-      <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+      <div className="flex flex-col sm:flex-row gap-3 w-full max-w-3xl mx-auto justify-center">
         <TelegramButton message={text_message} />
         <WhatsAppButton message={text_message} />
       </div>

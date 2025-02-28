@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { motion } from "framer-motion";
 import CloseIcon from "../ui/CloseIcon";
 
-const InfoModal = ({ isOpen, onClose, title, data, ref }) => {
+const InfoModal = forwardRef(({ isOpen, onClose, title, data }, ref) => {
   if (!isOpen) return null;
 
   const handleBackdropClick = (e) => {
@@ -48,7 +48,7 @@ const InfoModal = ({ isOpen, onClose, title, data, ref }) => {
                 <div key={index} className="bg-black/30 rounded-xl p-6 hover:bg-black/40 transition-colors">
                   <div className="flex items-start gap-6">
                     <img 
-                      src={item.coverImg} 
+                      src={item.coverImg || item.img} 
                       alt={item.name}
                       className="w-24 h-24 object-contain bg-white rounded-lg p-2"
                     />
@@ -72,11 +72,36 @@ const InfoModal = ({ isOpen, onClose, title, data, ref }) => {
                       </li>
                     ))}
                     {item.description && (
-                      <li className="flex items-start">
+                      <li className="flex items-start text-left">
                         <span>{item.description}</span>
                       </li>
                     )}
                   </ul>
+                  {item.link && (
+                    <div className="mt-6 flex justify-end">
+                      <a 
+                        href={item.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="group inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
+                      >
+                        <span>Посетить сайт</span>
+                        <svg 
+                          className="w-4 h-4 transition-transform group-hover:translate-x-1" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={2} 
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" 
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -85,6 +110,8 @@ const InfoModal = ({ isOpen, onClose, title, data, ref }) => {
       </div>
     </>
   );
-};
+});
+
+InfoModal.displayName = 'InfoModal';
 
 export default InfoModal; 

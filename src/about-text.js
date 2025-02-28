@@ -136,13 +136,15 @@ export const projects = [
     name: 'Guide for Applicants',
     date: '2023',
     description: 'Создал систему статей по поступлению в ВУЗы зарубежных стран и СНГ. Полностью разработал сайт и систему управления контентом.',
-    link: 'https://guideforapplicants.me',
+    link: 'https://cerebrum101.github.io/GFA/',
+    img: './src/assets/GFA.png'
   },
 
   {
     name: 'marytravel.kz',
     date: '2024',
-    description: 'Разработал сайт для туристической компании MaryTravel',
+    description: 'Разработал сайт для туристической компании MaryTravel.',
     link: 'https://marytravel.kz',
+    img: './src/assets/panam.jpg',
   }
 ];
