@@ -6,6 +6,9 @@ import beyond from './assets/beyond.png';
 import fizmatacademy from './assets/fizmatacademy.png';
 import { keyframes } from 'styled-components';
 
+import panam from './assets/panam.jpg';
+import gfa from './assets/GFA.png';
+
 
 
 export const education = [
@@ -137,7 +140,7 @@ export const projects = [
     date: '2023',
     description: 'Создал систему статей по поступлению в ВУЗы зарубежных стран и СНГ. Полностью разработал сайт и систему управления контентом.',
     link: 'https://cerebrum101.github.io/GFA/',
-    img: './src/assets/GFA.png'
+    img: gfa,
   },
 
   {
@@ -145,6 +148,6 @@ export const projects = [
     date: '2024',
     description: 'Разработал сайт для туристической компании MaryTravel.',
     link: 'https://marytravel.kz',
-    img: './src/assets/panam.jpg',
+    img: panam,
   }
 ];
