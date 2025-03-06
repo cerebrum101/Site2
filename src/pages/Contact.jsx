@@ -4,6 +4,7 @@ import {
   IconBrandGithub,
   IconBrandInstagram,
   IconBrandSpotify,
+  IconBrandLinkedin,
   IconMail
 } from "@tabler/icons-react";
 
@@ -28,6 +29,12 @@ const ContactPage = () => {
       color: "hover:text-[#E4405F]"
     },
     {
+      name: "LinkedIn",
+      icon: <IconBrandLinkedin className="h-8 w-8" />,
+      link: "https://linkedin.com/in/ataykim",
+      color: "hover:text-[#0A66C2]"
+    },
+    {
       name: "Spotify",
       icon: <IconBrandSpotify className="h-8 w-8" />,
       link: "https://open.spotify.com/user/4sx1rm86gxbpkx7usfvhkojin?si=9bc4627a51e64426",
@@ -39,7 +46,6 @@ const ContactPage = () => {
       link: "mailto:ataykimwork@gmail.com",
       color: "hover:text-[#EA4335]"
     },
-
   ];
 
   return (

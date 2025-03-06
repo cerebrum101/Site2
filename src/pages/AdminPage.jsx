@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './styles/admin.css';
+import '../styles/admin.css';
 
 const AdminPage = () => {
   const [title, setTitle] = useState('');

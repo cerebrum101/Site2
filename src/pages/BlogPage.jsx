@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import './styles/blog.css';
+import '../styles/blog.css';
 
 const BlogPage = () => {
   const { slug } = useParams();

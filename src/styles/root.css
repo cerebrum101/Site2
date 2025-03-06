@@ -3,23 +3,50 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
-  background-color: #242424;
+  background-color: black;
 }
 
-
 :root {
-  font-family: Helvetica;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: dark;
+  color: white;
+  background-color: black;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base styles */
+body {
+  background-color: black;
+  color: white;
+}
+
+/* Common interactive elements */
+button, 
+.button {
+  @apply bg-zinc-900 text-white border border-zinc-800 
+    hover:bg-zinc-800 hover:border-zinc-700
+    transition-all duration-200;
+}
+
+input, 
+textarea {
+  @apply bg-zinc-900 text-white border border-zinc-800 
+    focus:border-zinc-700 focus:ring-1 focus:ring-zinc-700
+    placeholder:text-zinc-500;
+}
+
+/* Card styles */
+.card {
+  @apply bg-zinc-900 border border-zinc-800 
+    hover:bg-zinc-800 hover:border-zinc-700
+    shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30
+    transition-all duration-200;
 }

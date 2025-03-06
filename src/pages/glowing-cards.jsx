@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { Box, Lock, Search, Settings, Sparkles } from "lucide-react";
-import { GlowingEffect } from "./ui/glowing-effect";
+import { GlowingEffect } from "../ui/glowing-effect";
 
 export default function GlowingCards() {
   return (

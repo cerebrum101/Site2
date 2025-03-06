@@ -8,6 +8,11 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  assetsInclude: ['**/*.md'],
+  assetsInclude: ['**/*.md', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg'],
   base: '/',
+  resolve: {
+    alias: {
+      '@': '/src'
+    }
+  }
 })

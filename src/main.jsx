@@ -3,17 +3,17 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import './styles/root.css'
 
-import About from './About'
-import Blog from './Blog'
-import BlogPage from './BlogPage'
-import LoginPage from './LoginPage'
-import AdminPage from './AdminPage'
-import NavBar from './components/NavBar'
-import Grid from './Home.jsx'
-import ExperiencePage from './pages/experience'
-import AwardsPage from './pages/awards'
-import Tutoring from './Tutoring'
-import ContactPage from './Contact'
+import About from './pages/About.jsx'
+import Blog from './pages/Blog.jsx'
+import BlogPage from './pages/BlogPage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
+import AdminPage from './pages/AdminPage.jsx'
+import NavBar from './components/NavBar.jsx'
+import Grid from './pages/Home.jsx'
+import ExperiencePage from './pages/experience.jsx'
+import AwardsPage from './pages/awards.jsx'
+import Tutoring from './pages/Tutoring.jsx'
+import ContactPage from './pages/Contact.jsx'
 
 // Add this function to check if user is admin
 const ProtectedRoute = ({ children }) => {
@@ -22,27 +22,10 @@ const ProtectedRoute = ({ children }) => {
 }
 
 const App = () => {
-  // Add ref to measure spacing
-  const navRef = useRef(null);
-  const contentRef = useRef(null);
-
-  useEffect(() => {
-    // Log spacing measurements
-    if (navRef.current && contentRef.current) {
-      console.log('Nav offset from top:', navRef.current.offsetTop);
-      console.log('Nav getBoundingClientRect:', navRef.current.getBoundingClientRect());
-      console.log('Content offset from top:', contentRef.current.offsetTop);
-      console.log('Body margin:', getComputedStyle(document.body).margin);
-      console.log('Root div margin:', getComputedStyle(document.getElementById('root')).margin);
-    }
-  }, []);
-
   return (
     <Router>
-      <div ref={navRef}>
-        <NavBar />
-      </div>
-      <div ref={contentRef}>
+      <NavBar />
+      <div>
         <Routes>
           <Route path="/" element={<Grid />} />
           <Route path="/tutoring" element={<Tutoring />} />
@@ -50,16 +33,9 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPage />} />
-          {/* <Route path="/glowing-cards" element={<GlowingCards />} /> */}
           <Route path="/experience" element={<ExperiencePage />} />
           <Route path="/awards" element={<AwardsPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          {/* <Route path="/cards" element={
-            <div>
-              <h1>Cards Page</h1>
-              <Cards />
-            </div>
-          } /> */}
           <Route 
             path="/admin/*" 
             element={
