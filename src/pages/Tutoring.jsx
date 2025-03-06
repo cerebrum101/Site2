@@ -41,9 +41,9 @@ function Tutoring() {
 
   return (
     <div className='min-h-screen bg-black'>
-      <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20'>
+      <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-16 lg:py-14'>
         {/* Hero Section */}
-        <div className="text-center space-y-6 mb-16">
+        <div className="text-center space-y-6 mb-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
             Записаться на занятия
           </h1>
@@ -120,10 +120,9 @@ function Tutoring() {
                 </a>
 
                 {/* Contact Buttons */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4">
                   <TelegramButton message={text_message} />
                   <WhatsAppButton message={text_message} />
-                  <LinkedInButton />
                 </div>
               </div>
             </div>
@@ -180,26 +179,7 @@ function WhatsAppButton({ message }) {
   return <Button url={url} name="WhatsApp" />;
 }
 
-function LinkedInButton() {
-  const url = "https://linkedin.com/in/ataykim";
-  return (
-    <a 
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center justify-center gap-3 px-6 py-4 text-base font-medium rounded-xl 
-        transition-all duration-300 text-center border border-zinc-800 group hover:-translate-y-1
-        bg-black hover:bg-zinc-900 text-white hover:shadow-lg hover:border-zinc-700"
-    >
-      <span className="flex items-center justify-center gap-3">
-        <svg className="w-5 h-5 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-        </svg>
-        LinkedIn
-      </span>
-    </a>
-  );
-}
+
 
 const FilterMenu = ({ title, categories, onSelecet, defaultSelected }) => {
   const [selectedCategory, setSelectedCategory] = useState(defaultSelected || categories[0]);
