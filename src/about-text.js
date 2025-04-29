@@ -8,7 +8,7 @@ import { keyframes } from 'styled-components';
 
 import panam from './assets/panam.jpg';
 import gfa from './assets/GFA.png';
-
+import courseplan from './assets/logeNew.png';
 
 
 export const education = [
@@ -151,5 +151,13 @@ export const projects = [
     description: 'Разработал сайт для туристической компании MaryTravel.',
     link: 'https://marytravel.kz',
     img: panam,
-  }
+  },
+  {
+    name: 'Course Planner',
+    date: '2025',
+    description: 'Разработал сайт для студентов NU, позволяющий наглядно зависимость между курсами и их требованиями. Сайт позволяет студентам планировать свое обучение и выбирать оптимальные курсы в будущих семестрах.',
+    link: 'https://courseplan.vercel.app/',
+    img: courseplan,
+  },
+
 ];
