@@ -87,7 +87,7 @@ export default function Grid() {
       className: "md:col-span-1",
       handleClick: () => {
         // This will trigger download
-        window.open('/resume_ru.pdf', '_blank');
+        window.open('/cv.pdf', '_blank');
       }
     },
     {
