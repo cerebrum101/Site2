@@ -1,24 +1,43 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-const posts = [
-  {
-    title: "Как подготовиться к ЕНТ по математике",
-    date: "15 марта 2024",
-    summary:
-      "Мой опыт подготовки к ЕНТ и эффективные стратегии, которые помогли получить высокий балл.",
-    slug: "ent-preparation",
-  },
-  {
-    title: "Топ-5 ошибок при подготовке к олимпиадам",
-    date: "10 марта 2024",
-    summary:
-      "Основные ошибки, которые часто допускают школьники при подготовке к олимпиадам.",
-    slug: "olympiad-mistakes",
-  },
-];
+const postsByLang = {
+  ru: [
+    {
+      title: "Как подготовиться к ЕНТ по математике",
+      date: "15 марта 2024",
+      summary: "Мой опыт подготовки к ЕНТ и эффективные стратегии, которые помогли получить высокий балл.",
+      slug: "ent-preparation",
+    },
+    {
+      title: "Топ-5 ошибок при подготовке к олимпиадам",
+      date: "10 марта 2024",
+      summary: "Основные ошибки, которые часто допускают школьники при подготовке к олимпиадам.",
+      slug: "olympiad-mistakes",
+    },
+  ],
+  en: [
+    {
+      title: "How to prepare for the UNT math exam",
+      date: "March 15, 2024",
+      summary: "My experience preparing for UNT and strategies that helped me score high.",
+      slug: "ent-preparation",
+    },
+    {
+      title: "Top 5 mistakes in olympiad preparation",
+      date: "March 10, 2024",
+      summary: "Common mistakes students make when preparing for math olympiads.",
+      slug: "olympiad-mistakes",
+    },
+  ],
+};
 
 export default function Blog() {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.resolvedLanguage || "en";
+  const posts = postsByLang[lang] || postsByLang.en;
+
   return (
     <main style={{ paddingTop: "2rem", paddingBottom: "4rem" }}>
       <h1
@@ -29,7 +48,7 @@ export default function Blog() {
           marginBottom: "2rem",
         }}
       >
-        Blog
+        {t("blog.title")}
       </h1>
       <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         {posts.map((post) => (

@@ -1,33 +1,55 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-const posts = [
-  {
-    title: "Как подготовиться к ЕНТ по математике",
-    date: "15 марта 2024",
-    content:
-      "В этой статье я расскажу о своем опыте подготовки к ЕНТ и поделюсь эффективными стратегиями, которые помогли мне получить высокий балл.",
-    slug: "ent-preparation",
-  },
-  {
-    title: "Топ-5 ошибок при подготовке к олимпиадам",
-    date: "10 марта 2024",
-    content:
-      "На основе опыта работы с учениками, я выделил основные ошибки, которые часто допускают школьники при подготовке к олимпиадам.",
-    slug: "olympiad-mistakes",
-  },
-];
+const postsByLang = {
+  ru: [
+    {
+      title: "Как подготовиться к ЕНТ по математике",
+      date: "15 марта 2024",
+      content:
+        "В этой статье я расскажу о своем опыте подготовки к ЕНТ и поделюсь эффективными стратегиями, которые помогли мне получить высокий балл.",
+      slug: "ent-preparation",
+    },
+    {
+      title: "Топ-5 ошибок при подготовке к олимпиадам",
+      date: "10 марта 2024",
+      content:
+        "На основе опыта работы с учениками, я выделил основные ошибки, которые часто допускают школьники при подготовке к олимпиадам.",
+      slug: "olympiad-mistakes",
+    },
+  ],
+  en: [
+    {
+      title: "How to prepare for the UNT math exam",
+      date: "March 15, 2024",
+      content:
+        "In this post I share my experience preparing for UNT and the strategies that helped me get a high score.",
+      slug: "ent-preparation",
+    },
+    {
+      title: "Top 5 mistakes in olympiad preparation",
+      date: "March 10, 2024",
+      content:
+        "Based on my experience working with students, here are common mistakes students make when preparing for math olympiads.",
+      slug: "olympiad-mistakes",
+    },
+  ],
+};
 
 export default function BlogPage() {
   const { slug } = useParams();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.resolvedLanguage || "en";
+  const builtInPosts = postsByLang[lang] || postsByLang.en;
 
-  const allPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]").concat(posts);
+  const allPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]").concat(builtInPosts);
   const post = allPosts.find((p) => p.slug === slug);
 
   if (!post) {
     return (
       <main style={{ paddingTop: "2rem" }}>
-        <p>Post not found.</p>
+        <p>{t("blog.postNotFound")}</p>
       </main>
     );
   }
@@ -54,7 +76,7 @@ export default function BlogPage() {
       </article>
       <footer style={{ marginTop: "3rem", paddingTop: "1.5rem", borderTop: "1px solid var(--divider)" }}>
         <Link to="/blog" style={{ fontSize: "0.875rem", color: "var(--text-tertiary)" }}>
-          ← Back to blog
+          {t("blog.backToBlog")}
         </Link>
       </footer>
     </main>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 import '../styles/login.css';
 
 const LoginPage = () => {
@@ -7,6 +8,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,17 +20,17 @@ const LoginPage = () => {
       localStorage.setItem('isAdmin', 'true');
       navigate('/blog');
     } else {
-      setError('Неверные учетные данные');
+      setError(t("auth.invalidCredentials"));
     }
   };
 
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Вход для администраторов</h2>
+        <h2>{t("auth.adminLoginTitle")}</h2>
         {error && <div className="error-message">{error}</div>}
         <div className="form-group">
-          <label htmlFor="username">Имя пользователя</label>
+          <label htmlFor="username">{t("auth.username")}</label>
           <input
             type="text"
             id="username"
@@ -38,7 +40,7 @@ const LoginPage = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Пароль</label>
+          <label htmlFor="password">{t("auth.password")}</label>
           <input
             type="password"
             id="password"
@@ -48,7 +50,7 @@ const LoginPage = () => {
           />
         </div>
         <button type="submit" className="login-button">
-          Войти
+          {t("auth.signIn")}
         </button>
       </form>
     </div>

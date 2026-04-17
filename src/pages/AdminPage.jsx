@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 import '../styles/admin.css';
 
 const AdminPage = () => {
@@ -7,10 +8,14 @@ const AdminPage = () => {
   const [content, setContent] = useState('');
   const [coverImage, setCoverImage] = useState('');
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(null); // "success" | "error" | null
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setMessage('');
+    setMessageType(null);
     
     // Generate slug from title
     const slug = title
@@ -19,7 +24,7 @@ const AdminPage = () => {
       .replace(/\s+/g, '-');
     
     // Get current date in Russian format
-    const currentDate = new Date().toLocaleDateString('ru-RU', {
+    const currentDate = new Date().toLocaleDateString(i18n.resolvedLanguage === "ru" ? "ru-RU" : "en-US", {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
@@ -41,7 +46,8 @@ const AdminPage = () => {
       existingPosts.push(newPost);
       localStorage.setItem('blogPosts', JSON.stringify(existingPosts));
       
-      setMessage('Пост успешно создан!');
+      setMessage(t("admin.postCreated"));
+      setMessageType("success");
       setTitle('');
       setContent('');
       setCoverImage('');
@@ -51,7 +57,8 @@ const AdminPage = () => {
         navigate(`/blog/${slug}`);
       }, 1000);
     } catch (error) {
-      setMessage('Ошибка при создании поста');
+      setMessage(t("admin.postCreateError"));
+      setMessageType("error");
     }
   };
 
@@ -63,21 +70,21 @@ const AdminPage = () => {
   return (
     <div className="admin-container">
       <div className="admin-header">
-        <h1>Панель администратора</h1>
+        <h1>{t("admin.title")}</h1>
         <button onClick={handleLogout} className="logout-button">
-          Выйти
+          {t("admin.logout")}
         </button>
       </div>
 
       {message && (
-        <div className={`message ${message.includes('Ошибка') ? 'error' : 'success'}`}>
+        <div className={`message ${messageType === "error" ? 'error' : 'success'}`}>
           {message}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="post-form">
         <div className="form-group">
-          <label htmlFor="title">Заголовок</label>
+          <label htmlFor="title">{t("admin.postTitle")}</label>
           <input
             type="text"
             id="title"
@@ -88,13 +95,13 @@ const AdminPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="coverImage">URL обложки</label>
+          <label htmlFor="coverImage">{t("admin.coverUrl")}</label>
           <input
             type="url"
             id="coverImage"
             value={coverImage}
             onChange={(e) => setCoverImage(e.target.value)}
-            placeholder="https://example.com/image.jpg"
+            placeholder={t("admin.coverPlaceholder")}
           />
           {coverImage && (
             <div className="image-preview">
@@ -104,7 +111,7 @@ const AdminPage = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="content">Содержание</label>
+          <label htmlFor="content">{t("admin.content")}</label>
           <textarea
             id="content"
             value={content}
@@ -115,7 +122,7 @@ const AdminPage = () => {
         </div>
 
         <button type="submit" className="submit-button">
-          Опубликовать
+          {t("admin.publish")}
         </button>
       </form>
     </div>
