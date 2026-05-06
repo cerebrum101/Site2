@@ -28,7 +28,7 @@ slug: my-first-post
 summary: Short preview text shown on /blog.
 publishedAt: 2026-05-06
 language: en
-coverImage: /blog/my-first-post/cover.jpg
+coverImage: cover.jpg
 ---
 
 # My First Post
@@ -43,29 +43,45 @@ Supported frontmatter:
 - `summary` optional
 - `publishedAt` optional, formatted by site language
 - `language` optional, usually `en` or `ru`
-- `coverImage` optional, path to an image in `public/`
+- `coverImage` optional. Put the file in `public/media/` and use either a bare filename (`cover.jpg`) or a full URL / path (`/something/else.png`).
 - `draft: true` optional, hides the post
 
-### Images
+### Images (one folder — minimal friction)
 
-Put post images in:
+Put **all** blog images here:
 
 ```text
-public/blog/<slug>/
+public/media/
 ```
 
-Reference them from Markdown using site-root paths:
+- **Cover in frontmatter:** `coverImage: my-photo.jpg` (same folder). You can still use `/media/my-photo.jpg` or any full URL.
+
+- **Inline in the post:** short form is rewritten for you:
+
+  ```md
+  ![diagram](diagram.png)
+  ```
+
+  → served as `/media/diagram.png` (drop `diagram.png` into `public/media/`).
+
+Optional subfolders also work:
+
+```text
+public/media/2026-may/note.png   → coverImage: 2026-may/note.png
+```
+
+Avoid Obsidian-only syntax like `![[image.png]]` unless your plugin emits normal `![](…)`.
+
+External images are fine:
 
 ```md
-![Diagram](/blog/my-first-post/diagram.png)
+![](https://example.com/pic.jpg)
 ```
-
-Avoid Obsidian wiki image syntax like `![[image.png]]`; use normal Markdown image syntax.
 
 ### Publishing
 
 1. Write or edit the `.md` file.
-2. Add any images under `public/blog/<slug>/`.
+2. Drop images into `public/media/` (optionally subfolders).
 3. Commit and push to GitHub.
 4. Vercel redeploys `atayk.vercel.com`.
 
