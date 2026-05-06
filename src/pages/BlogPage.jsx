@@ -1,50 +1,18 @@
-import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
-const postsByLang = {
-  ru: [
-    {
-      title: "Как подготовиться к ЕНТ по математике",
-      date: "15 марта 2024",
-      content:
-        "В этой статье я расскажу о своем опыте подготовки к ЕНТ и поделюсь эффективными стратегиями, которые помогли мне получить высокий балл.",
-      slug: "ent-preparation",
-    },
-    {
-      title: "Топ-5 ошибок при подготовке к олимпиадам",
-      date: "10 марта 2024",
-      content:
-        "На основе опыта работы с учениками, я выделил основные ошибки, которые часто допускают школьники при подготовке к олимпиадам.",
-      slug: "olympiad-mistakes",
-    },
-  ],
-  en: [
-    {
-      title: "How to prepare for the UNT math exam",
-      date: "March 15, 2024",
-      content:
-        "In this post I share my experience preparing for UNT and the strategies that helped me get a high score.",
-      slug: "ent-preparation",
-    },
-    {
-      title: "Top 5 mistakes in olympiad preparation",
-      date: "March 10, 2024",
-      content:
-        "Based on my experience working with students, here are common mistakes students make when preparing for math olympiads.",
-      slug: "olympiad-mistakes",
-    },
-  ],
-};
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeExternalLinks from "rehype-external-links";
+import rehypeHighlight from "rehype-highlight";
+import { formatPostDate, getPostBySlug } from "../lib/markdownPosts";
 
 export default function BlogPage() {
   const { slug } = useParams();
   const { t, i18n } = useTranslation();
   const lang = i18n.resolvedLanguage || "en";
-  const builtInPosts = postsByLang[lang] || postsByLang.en;
-
-  const allPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]").concat(builtInPosts);
-  const post = allPosts.find((p) => p.slug === slug);
+  const post = getPostBySlug(slug, lang);
 
   if (!post) {
     return (
@@ -68,10 +36,39 @@ export default function BlogPage() {
           {post.title}
         </h1>
         <p style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)", marginBottom: "2rem" }}>
-          {post.date}
+          {formatPostDate(post, lang)}
         </p>
+
+        {post.coverImage && (
+          <div
+            style={{
+              marginBottom: "2rem",
+              borderRadius: "0.75rem",
+              overflow: "hidden",
+              border: "1px solid var(--divider)",
+            }}
+          >
+            <img
+              src={post.coverImage}
+              alt=""
+              loading="lazy"
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
+          </div>
+        )}
+
         <div style={{ color: "var(--text-secondary)", lineHeight: 1.8 }}>
-          {post.content}
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[
+              rehypeSlug,
+              [rehypeAutolinkHeadings, { behavior: "wrap" }],
+              [rehypeExternalLinks, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
+              rehypeHighlight,
+            ]}
+          >
+            {post.body}
+          </ReactMarkdown>
         </div>
       </article>
       <footer style={{ marginTop: "3rem", paddingTop: "1.5rem", borderTop: "1px solid var(--divider)" }}>

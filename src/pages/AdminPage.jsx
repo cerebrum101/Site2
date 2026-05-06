@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import '../styles/admin.css';
@@ -56,7 +56,7 @@ const AdminPage = () => {
       setTimeout(() => {
         navigate(`/blog/${slug}`);
       }, 1000);
-    } catch (error) {
+    } catch {
       setMessage(t("admin.postCreateError"));
       setMessageType("error");
     }

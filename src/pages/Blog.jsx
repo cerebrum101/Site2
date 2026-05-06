@@ -1,42 +1,11 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
-const postsByLang = {
-  ru: [
-    {
-      title: "Как подготовиться к ЕНТ по математике",
-      date: "15 марта 2024",
-      summary: "Мой опыт подготовки к ЕНТ и эффективные стратегии, которые помогли получить высокий балл.",
-      slug: "ent-preparation",
-    },
-    {
-      title: "Топ-5 ошибок при подготовке к олимпиадам",
-      date: "10 марта 2024",
-      summary: "Основные ошибки, которые часто допускают школьники при подготовке к олимпиадам.",
-      slug: "olympiad-mistakes",
-    },
-  ],
-  en: [
-    {
-      title: "How to prepare for the UNT math exam",
-      date: "March 15, 2024",
-      summary: "My experience preparing for UNT and strategies that helped me score high.",
-      slug: "ent-preparation",
-    },
-    {
-      title: "Top 5 mistakes in olympiad preparation",
-      date: "March 10, 2024",
-      summary: "Common mistakes students make when preparing for math olympiads.",
-      slug: "olympiad-mistakes",
-    },
-  ],
-};
+import { formatPostDate, getPosts } from "../lib/markdownPosts";
 
 export default function Blog() {
   const { t, i18n } = useTranslation();
   const lang = i18n.resolvedLanguage || "en";
-  const posts = postsByLang[lang] || postsByLang.en;
+  const posts = getPosts(lang);
 
   return (
     <main style={{ paddingTop: "2rem", paddingBottom: "4rem" }}>
@@ -50,6 +19,7 @@ export default function Blog() {
       >
         {t("blog.title")}
       </h1>
+
       <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         {posts.map((post) => (
           <Link
@@ -58,11 +28,28 @@ export default function Blog() {
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <article>
+              {post.coverImage && (
+                <div
+                  style={{
+                    marginBottom: "0.75rem",
+                    borderRadius: "0.75rem",
+                    overflow: "hidden",
+                    border: "1px solid var(--divider)",
+                  }}
+                >
+                  <img
+                    src={post.coverImage}
+                    alt=""
+                    loading="lazy"
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
+                </div>
+              )}
               <h2 style={{ fontSize: "1.125rem", fontWeight: 500, marginBottom: "0.25rem" }}>
                 {post.title}
               </h2>
               <p style={{ fontSize: "0.8125rem", color: "var(--text-tertiary)", marginBottom: "0.35rem" }}>
-                {post.date}
+                {formatPostDate(post, lang)}
               </p>
               <p style={{ fontSize: "0.9375rem", color: "var(--text-secondary)" }}>
                 {post.summary}
