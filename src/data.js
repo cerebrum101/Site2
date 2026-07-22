@@ -46,6 +46,20 @@ const DATA = {
     ],
     research: [
       {
+        role: "Research Intern",
+        org: "PDE Center, Ghent University",
+        url: "https://www.ugent.be/en/research/research-groups/pde",
+        date: "Jun – Jul 2026",
+        line:
+          "Under Bolys Saiatbek (PDE Center): Fourier Neural Operators for interactive fluid simulation. " +
+          "Cornerstone — trained an FNO to advance a 64×64 smoke/velocity field one timestep, matching a classical solver, so sources and sinks update in milliseconds instead of re-solving the full PDE. " +
+          "Report covers FNO theory (spectral mixing, discretization invariance) and limits (blur, periodic box, training distribution).",
+        links: [
+          { label: "simulation", url: "https://fno.atay.top" },
+          { label: "report", url: "/fno_report.pdf" },
+        ],
+      },
+      {
         role: "Research Assistant",
         org: "INMET — Center of Digital Modelling and AI in Energy",
         date: "Jan 2026 – Present",

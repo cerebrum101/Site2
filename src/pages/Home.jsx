@@ -28,7 +28,7 @@ const Section = ({ title, children, style }) => (
   </section>
 );
 
-const ExperienceItem = ({ role, org, url, date, line }) => (
+const ExperienceItem = ({ role, org, url, date, line, links }) => (
   <div style={{ marginBottom: "1.25rem" }}>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
       <span>
@@ -38,7 +38,22 @@ const ExperienceItem = ({ role, org, url, date, line }) => (
       </span>
       <span style={{ ...smallGray, whiteSpace: "nowrap" }}>{date}</span>
     </div>
-    <p style={{ ...secondary, ...small, marginTop: "0.2rem" }}>{line}</p>
+    <p style={{ ...secondary, ...small, marginTop: "0.2rem" }}>
+      {line}
+      {Array.isArray(links) && links.length > 0 && (
+        <>
+          {" "}
+          {links.map((link, i) => (
+            <span key={link.url}>
+              {i > 0 && " / "}
+              <a href={link.url} target="_blank" rel="noopener noreferrer">
+                [{link.label}]
+              </a>
+            </span>
+          ))}
+        </>
+      )}
+    </p>
   </div>
 );
 
