@@ -1,6 +1,7 @@
 const REVIEW_1_SRC = new URL("./assets/reviews/IMG_9326.jpg", import.meta.url).href;
 const REVIEW_2_SRC = new URL("./assets/reviews/Screenshot 2026-04-17 at 22.02.30.png", import.meta.url).href;
 const REVIEW_3_SRC = new URL("./assets/reviews/photo_5408960505986094813_y.jpg", import.meta.url).href;
+const REVIEW_4_SRC = new URL("./assets/reviews/femo-bronze-2026.png", import.meta.url).href;
 
 const DATA = {
   en: {
@@ -13,7 +14,8 @@ const DATA = {
       linkedin: "https://linkedin.com/in/ataykim",
     },
     now:
-      "Research Assistant at INMET, studying mathematical optimization of energy systems in Kazakhstan. " +
+      "Research Assistant at INMET, working with Prof. Yanwei Wang on Fourier Neural Operators for engineering PDEs. " +
+      "Recently presented this work at AIDME-2026 after a summer research visit to Ghent University. " +
       "Education Consultant at BI Education, building AI-driven lessons for UNT preparation. " +
       "Organizing committee member at Beyond Curriculum, running international contests with 2000+ participants.",
     experience: [
@@ -47,13 +49,12 @@ const DATA = {
     research: [
       {
         role: "Research Intern",
-        org: "PDE Center, Ghent University",
+        org: "Ghent Analysis & PDE Center, Ghent University",
         url: "https://www.ugent.be/en/research/research-groups/pde",
         date: "Jun – Jul 2026",
         line:
-          "Under Bolys Saiatbek (PDE Center): Fourier Neural Operators for interactive fluid simulation. " +
-          "Cornerstone — trained an FNO to advance a 64×64 smoke/velocity field one timestep, matching a classical solver, so sources and sinks update in milliseconds instead of re-solving the full PDE. " +
-          "Report covers FNO theory (spectral mixing, discretization invariance) and limits (blur, periodic box, training distribution).",
+          "Worked with Bolys Sabitbek on PDEs and neural operators; trained a small FNO on synthetic 2D Navier–Stokes smoke-flow trajectories generated with PhiFlow. " +
+          "The project explored rapid surrogate simulation while documenting limits from blur, periodic boundaries, and distribution shift.",
         links: [
           { label: "simulation", url: "https://fno.atay.top" },
           { label: "report", url: "/fno_report.pdf" },
@@ -63,7 +64,13 @@ const DATA = {
         role: "Research Assistant",
         org: "INMET — Center of Digital Modelling and AI in Energy",
         date: "Jan 2026 – Present",
-        line: "Gathered data on high-tech energy companies in Kazakhstan (wind, solar, hydrogen, nuclear). Applied mathematical optimization methods to assess financial risks, potentials, and benefits.",
+        line:
+          "Continuing FNO research with Prof. Yanwei Wang for engineering PDEs. Presented “Fourier Neural Operators for Engineering PDEs” at AIDME-2026 on August 7, 2026. " +
+          "The reproducible 1D heat-conduction study shows why low in-distribution field error alone is insufficient: derivative, balance, and structured out-of-distribution checks expose substantially larger errors.",
+        links: [
+          { label: "poster", url: "/aidme-2026-fno-poster.pdf" },
+          { label: "detailed report", url: "/aidme-2026-fno-report.pdf" },
+        ],
       },
     ],
     projects: [
@@ -94,6 +101,11 @@ const DATA = {
       "Discrete Mathematics",
       "Abstract Algebra",
       "Probability",
+      "Real Analysis I",
+      "Mathematical Statistics",
+      "Partial Differential Equations",
+      "Complex Analysis",
+      "Game Theory and Economic Analysis",
       "Numerical Methods",
       "Research Methods",
       "Physics I & II",
@@ -130,6 +142,7 @@ const DATA = {
         "NUET: 177 in 9 weeks",
         "Admissions: NU, NYUSH, MIPT, MSU, MAI",
         "From struggling → top-1 in class",
+        "Grade 1: bronze medal at the FEMO International Final (2026)",
       ],
       note: "More details (student results, diplomas, and achievements) — in DMs.",
       contacts: {
@@ -143,6 +156,7 @@ const DATA = {
       { src: REVIEW_1_SRC, alt: "Student review 1" },
       { src: REVIEW_2_SRC, alt: "Student review 2" },
       { src: REVIEW_3_SRC, alt: "Student review 3" },
+      { src: REVIEW_4_SRC, alt: "Student bronze-medal result at the FEMO International Final" },
     ],
   },
   ru: {
@@ -155,7 +169,8 @@ const DATA = {
       linkedin: "https://linkedin.com/in/ataykim",
     },
     now:
-      "Research Assistant в INMET: занимаюсь математической оптимизацией энергетических систем в Казахстане. " +
+      "Research Assistant в INMET: вместе с Prof. Yanwei Wang исследую Fourier Neural Operators для инженерных PDE. " +
+      "Недавно представил эту работу на AIDME-2026 после летней исследовательской стажировки в Ghent University. " +
       "Education Consultant в BI Education: делаю AI-уроки и задания для подготовки к ЕНТ. " +
       "Оргкомитет Beyond Curriculum: провожу международные контесты (2000+ участников).",
     experience: [
@@ -188,10 +203,29 @@ const DATA = {
     ],
     research: [
       {
+        role: "Research Intern",
+        org: "Ghent Analysis & PDE Center, Ghent University",
+        url: "https://www.ugent.be/en/research/research-groups/pde",
+        date: "июн – июл 2026",
+        line:
+          "Работал с Bolys Sabitbek над PDE и нейронными операторами; обучил небольшой FNO на синтетических траекториях 2D Navier–Stokes для потока дыма, сгенерированных в PhiFlow. " +
+          "Проект исследовал быстрые surrogate-модели и ограничения, связанные с размытием, периодическими границами и distribution shift.",
+        links: [
+          { label: "демо", url: "https://fno.atay.top" },
+          { label: "отчёт", url: "/fno_report.pdf" },
+        ],
+      },
+      {
         role: "Research Assistant",
         org: "INMET — Center of Digital Modelling and AI in Energy",
         date: "янв 2026 – н.в.",
-        line: "Собрал данные по high-tech энергокомпаниям Казахстана (ветер, солнце, водород, атом). Применял методы оптимизации для оценки рисков, потенциала и выгод.",
+        line:
+          "Продолжаю исследование FNO для инженерных PDE вместе с Prof. Yanwei Wang. 7 августа 2026 представил постер “Fourier Neural Operators for Engineering PDEs” на AIDME-2026. " +
+          "Воспроизводимый 1D benchmark теплопроводности показывает, почему низкой in-distribution ошибки поля недостаточно: проверки производных, баланса и structured OOD выявляют значительно большие ошибки.",
+        links: [
+          { label: "постер", url: "/aidme-2026-fno-poster.pdf" },
+          { label: "подробный отчёт", url: "/aidme-2026-fno-report.pdf" },
+        ],
       },
     ],
     projects: [
@@ -222,6 +256,11 @@ const DATA = {
       "Дискретная математика",
       "Абстрактная алгебра",
       "Теория вероятностей",
+      "Вещественный анализ I",
+      "Математическая статистика",
+      "Уравнения в частных производных",
+      "Комплексный анализ",
+      "Теория игр и экономический анализ",
       "Численные методы",
       "Методы исследования",
       "Физика I & II",
@@ -258,6 +297,7 @@ const DATA = {
         "NUET: 177 за 9 недель",
         "Поступления: NU, NYUSH, МФТИ, МГУ, МАИ",
         "От «не получается» → топ‑1 в классе",
+        "1 класс: бронза на международном финале FEMO (2026)",
       ],
       note: "Детали (результаты учеников, дипломы и достижения) — в личке.",
       contacts: {
@@ -271,6 +311,7 @@ const DATA = {
       { src: REVIEW_1_SRC, alt: "Отзыв 1" },
       { src: REVIEW_2_SRC, alt: "Отзыв 2" },
       { src: REVIEW_3_SRC, alt: "Отзыв 3" },
+      { src: REVIEW_4_SRC, alt: "Бронзовый результат ученика на международном финале FEMO" },
     ],
   },
 };
