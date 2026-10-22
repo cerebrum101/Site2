@@ -209,8 +209,6 @@ const DATA = {
       contacts: {
         telegramHandle: "@ataywork",
         telegramUrl: "https://t.me/ataywork",
-        phone: "+7 (778) 189-26-40",
-        whatsappUrl: "https://wa.me/77781892640",
       },
     },
     reviewImages: [
@@ -403,8 +401,6 @@ const DATA = {
       contacts: {
         telegramHandle: "@ataywork",
         telegramUrl: "https://t.me/ataywork",
-        phone: "+7 (778) 189-26-40",
-        whatsappUrl: "https://wa.me/77781892640",
       },
     },
     reviewImages: [

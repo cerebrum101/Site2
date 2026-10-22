@@ -69,6 +69,7 @@ const ProjectItem = ({ name, url, line, onOpen, detailLabel }) => (
 export default function Home() {
   const [activeReviewIdx, setActiveReviewIdx] = useState(null);
   const [activeDetail, setActiveDetail] = useState(null);
+  const [phone, setPhone] = useState(null);
   const { t, i18n } = useTranslation();
   const lang = i18n.resolvedLanguage || "en";
   const {
@@ -88,6 +89,7 @@ export default function Home() {
     certificates,
   } = getSiteData(lang);
   const detailLabel = lang === "ru" ? "Подробнее" : "Read more";
+  const whatsappUrl = phone ? `https://wa.me/${phone.replace(/\D/g, "")}` : null;
 
   const activeReview = useMemo(() => {
     if (activeReviewIdx == null) return null;
@@ -118,7 +120,7 @@ export default function Home() {
   const tutoringSection = (
     <Section title={t("home.tutoring")}>
       <p style={{ ...secondary, marginBottom: "0.5rem" }}>{tutoring.tagline}</p>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginTop: "1rem" }} className="tutor-grid">
+      <div className="tutor-offering">
         <div>
           <p style={{ ...smallGray, marginBottom: "0.5rem" }}>{t("home.prep")}</p>
           <ul style={{ margin: 0, paddingLeft: "1.1rem", ...secondary, ...small }}>
@@ -127,22 +129,35 @@ export default function Home() {
           <p style={{ ...smallGray, marginTop: "1rem", marginBottom: "0.5rem" }}>{t("home.university")}</p>
           <p style={{ ...secondary, ...small, margin: 0 }}>{tutoring.uniCourses.join(" · ")}</p>
         </div>
-        <div>
+      </div>
+      <div className="tutor-results">
+        <p className="tutor-results-title">{lang === "ru" ? "Результаты" : "Results"}</p>
+        <div className="tutor-results-grid">
+          <div>
           <p style={{ ...smallGray, marginBottom: "0.5rem" }}>{t("home.myScores")}</p>
           <ul style={{ margin: 0, paddingLeft: "1.1rem", ...secondary, ...small }}>
             {tutoring.myScores.map((x, i) => <li key={i} style={{ marginBottom: "0.25rem" }}>{x}</li>)}
           </ul>
+          </div>
+          <div>
           <p style={{ ...smallGray, marginTop: "1rem", marginBottom: "0.5rem" }}>{t("home.studentOutcomes")}</p>
           <ul style={{ margin: 0, paddingLeft: "1.1rem", ...secondary, ...small }}>
             {tutoring.studentResults.map((x, i) => <li key={i} style={{ marginBottom: "0.25rem" }}>{x}</li>)}
           </ul>
+          </div>
         </div>
       </div>
       <p style={{ ...tertiary, fontSize: "0.9375rem", marginTop: "1rem" }}>{tutoring.note}</p>
       <p style={{ fontSize: "0.9375rem", marginTop: "0.75rem" }}>
         <a href={tutoring.contacts.telegramUrl} target="_blank" rel="noopener noreferrer">TG {tutoring.contacts.telegramHandle}</a>
-        {" / "}<a href={tutoring.contacts.whatsappUrl} target="_blank" rel="noopener noreferrer">{t("common.whatsapp")}</a>
-        {" / "}<span style={tertiary}>{tutoring.contacts.phone}</span>
+        {" / "}
+        {phone ? (
+          <><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">{t("common.whatsapp")}</a>{" / "}<a href={`tel:${phone.replace(/[^+\d]/g, "")}`}>{phone}</a></>
+        ) : (
+          <button type="button" className="phone-reveal" onClick={() => setPhone(window.atob("KzcgKDc3OCkgMTg5LTI2LTQw"))}>
+            [{lang === "ru" ? "показать номер" : "show phone number"}]
+          </button>
+        )}
       </p>
       <div style={{ marginTop: "1.5rem" }}>
         <p style={{ ...smallGray, marginBottom: "0.25rem" }}>{t("home.reviews")}</p>
@@ -462,7 +477,14 @@ export default function Home() {
           cursor: pointer;
         }
         .resource-links a:hover, .more-button:hover { color: #0b4f82; text-decoration-color: currentColor; }
-        .resource-links a:focus-visible, .more-button:focus-visible, .detail-close:focus-visible { outline: 2px solid #185f94; outline-offset: 2px; }
+        .phone-reveal { padding: 0; border: 0; background: none; color: #185f94; font: inherit; text-decoration: underline; text-decoration-color: #b7d8f2; text-underline-offset: 3px; cursor: pointer; }
+        .phone-reveal:hover { color: #0b4f82; text-decoration-color: currentColor; }
+        .resource-links a:focus-visible, .more-button:focus-visible, .phone-reveal:focus-visible, .detail-close:focus-visible { outline: 2px solid #185f94; outline-offset: 2px; }
+        .tutor-offering { margin-top: 1rem; }
+        .tutor-results { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--divider); }
+        .tutor-results-title { margin: 0 0 .85rem; color: var(--text-secondary); font-weight: 500; }
+        .tutor-results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .tutor-results-grid > div > p { margin-top: 0 !important; }
         .certificate-grid { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: .1rem 0 .8rem; scrollbar-width: thin; }
         .certificate-card { flex: 0 0 min(72%, 18rem); display: flex; flex-direction: column; gap: .45rem; color: #185f94; text-decoration: none; scroll-snap-align: start; }
         .certificate-sheet { aspect-ratio: 4 / 3; display: grid; place-items: center; padding: .5rem; border: 1px solid var(--divider); background: #fff; }
@@ -486,12 +508,13 @@ export default function Home() {
           }
           .desktop-only { display: none; }
           .mobile-only { display: block; }
-          .resource-links a, .more-button { min-height: 44px; padding: .55rem 0; }
+          .resource-links a, .more-button, .phone-reveal { min-height: 44px; padding: .55rem 0; }
           .detail-close { min-height: 44px; }
           .certificate-card { flex-basis: 86%; }
           .detail-drawer { width: 100%; padding: 1.25rem 1.25rem 4rem; box-shadow: none; }
-          .tutor-grid {
+          .tutor-results-grid {
             grid-template-columns: 1fr !important;
+            gap: 1rem;
           }
         }
 
