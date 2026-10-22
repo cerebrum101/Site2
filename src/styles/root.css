@@ -6,6 +6,10 @@
   --text-secondary: #555;
   --text-tertiary: #999;
   --divider: #e0ddd8;
+  --accent: #075fbd;
+  --accent-hover: #00488f;
+  --accent-soft: #eaf3fc;
+  --accent-border: #a9c9ea;
 
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-size: 16px;
@@ -39,15 +43,18 @@ body {
 }
 
 a {
-  color: var(--text);
-  text-decoration-color: var(--divider);
+  color: var(--accent);
+  text-decoration-color: var(--accent-border);
   text-underline-offset: 3px;
   transition: text-decoration-color 0.15s ease;
 }
 
 a:hover {
-  text-decoration-color: var(--text);
+  color: var(--accent-hover);
+  text-decoration-color: currentColor;
 }
+
+button { -webkit-tap-highlight-color: transparent; }
 
 ::selection {
   background: #d4d0c8;
