@@ -32,7 +32,7 @@ const Section = ({ title, children, style }) => (
 const ResourceLinks = ({ url, links }) => {
   const resources = [...(url ? [{ label: "website", url }] : []), ...(links || [])];
   if (!resources.length) return null;
-  return <div className="resource-links">{resources.map((link) => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div>;
+  return <div className="resource-links">{resources.map((link) => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">[{link.label}]</a>)}</div>;
 };
 
 const ExperienceItem = ({ role, org, url, date, line, links, onOpen, detailLabel }) => (
@@ -50,7 +50,7 @@ const ExperienceItem = ({ role, org, url, date, line, links, onOpen, detailLabel
     </p>
     <div className="entry-actions">
       <ResourceLinks links={links} />
-      <button type="button" className="more-button" onClick={onOpen}>{detailLabel} →</button>
+      <button type="button" className="more-button" onClick={onOpen}>[{detailLabel}]</button>
     </div>
   </div>
 );
@@ -61,7 +61,7 @@ const ProjectItem = ({ name, url, line, onOpen, detailLabel }) => (
     <p style={{ ...secondary, ...small, marginTop: "0.15rem" }}>{line}</p>
     <div className="entry-actions">
       <ResourceLinks url={url} />
-      <button type="button" className="more-button" onClick={onOpen}>{detailLabel} →</button>
+      <button type="button" className="more-button" onClick={onOpen}>[{detailLabel}]</button>
     </div>
   </div>
 );
@@ -114,6 +114,58 @@ export default function Home() {
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [activeDetail]);
+
+  const tutoringSection = (
+    <Section title={t("home.tutoring")}>
+      <p style={{ ...secondary, marginBottom: "0.5rem" }}>{tutoring.tagline}</p>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginTop: "1rem" }} className="tutor-grid">
+        <div>
+          <p style={{ ...smallGray, marginBottom: "0.5rem" }}>{t("home.prep")}</p>
+          <ul style={{ margin: 0, paddingLeft: "1.1rem", ...secondary, ...small }}>
+            {tutoring.prep.map((x, i) => <li key={i} style={{ marginBottom: "0.25rem" }}>{x}</li>)}
+          </ul>
+          <p style={{ ...smallGray, marginTop: "1rem", marginBottom: "0.5rem" }}>{t("home.university")}</p>
+          <p style={{ ...secondary, ...small, margin: 0 }}>{tutoring.uniCourses.join(" · ")}</p>
+        </div>
+        <div>
+          <p style={{ ...smallGray, marginBottom: "0.5rem" }}>{t("home.myScores")}</p>
+          <ul style={{ margin: 0, paddingLeft: "1.1rem", ...secondary, ...small }}>
+            {tutoring.myScores.map((x, i) => <li key={i} style={{ marginBottom: "0.25rem" }}>{x}</li>)}
+          </ul>
+          <p style={{ ...smallGray, marginTop: "1rem", marginBottom: "0.5rem" }}>{t("home.studentOutcomes")}</p>
+          <ul style={{ margin: 0, paddingLeft: "1.1rem", ...secondary, ...small }}>
+            {tutoring.studentResults.map((x, i) => <li key={i} style={{ marginBottom: "0.25rem" }}>{x}</li>)}
+          </ul>
+        </div>
+      </div>
+      <p style={{ ...tertiary, fontSize: "0.9375rem", marginTop: "1rem" }}>{tutoring.note}</p>
+      <p style={{ fontSize: "0.9375rem", marginTop: "0.75rem" }}>
+        <a href={tutoring.contacts.telegramUrl} target="_blank" rel="noopener noreferrer">TG {tutoring.contacts.telegramHandle}</a>
+        {" / "}<a href={tutoring.contacts.whatsappUrl} target="_blank" rel="noopener noreferrer">{t("common.whatsapp")}</a>
+        {" / "}<span style={tertiary}>{tutoring.contacts.phone}</span>
+      </p>
+      <div style={{ marginTop: "1.5rem" }}>
+        <p style={{ ...smallGray, marginBottom: "0.25rem" }}>{t("home.reviews")}</p>
+        <p style={{ ...tertiary, fontSize: "0.9375rem", margin: 0, marginBottom: "0.75rem" }}>{t("home.reviewsHint")}</p>
+        <div className="reviews-grid">
+          {reviewImages.map((img, i) => (
+            <button key={i} type="button" className="review-tile" onClick={() => setActiveReviewIdx(i)} aria-label={img.alt}>
+              <img src={img.src} alt={img.alt} className="review-img" />
+              <span className="review-overlay">{t("home.reviewsHint")}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </Section>
+  );
+
+  const skillsSection = (
+    <Section title={t("home.skills")}>
+      <p style={{ ...secondary, ...small }}>{skills.stack}</p>
+      <p style={{ ...secondary, ...small }}>{skills.tools}</p>
+      <p style={{ ...secondary, ...small }}>{skills.languages}</p>
+    </Section>
+  );
 
   /* ---- Left column: identity + short sections ---- */
   const left = (
@@ -249,23 +301,21 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <p style={{ ...tertiary, fontSize: "0.9375rem", marginTop: "0.75rem" }}>
+        <p style={{ ...secondary, fontSize: "0.9375rem", marginTop: "0.75rem" }}>
           {t("home.tests")}: {tests.join(" · ")}
         </p>
       </Section>
 
       {/* Skills */}
-      <Section title={t("home.skills")}>
-        <p style={{ ...secondary, ...small }}>{skills.stack}</p>
-        <p style={{ ...secondary, ...small }}>{skills.tools}</p>
-        <p style={{ ...secondary, ...small }}>{skills.languages}</p>
-      </Section>
+      <div className="mobile-only">{skillsSection}</div>
+      <div className="desktop-only">{tutoringSection}</div>
     </div>
   );
 
   /* ---- Right column: longer sections ---- */
   const right = (
     <div>
+      <div className="desktop-only">{skillsSection}</div>
       {/* Experience */}
       <Section title={t("home.experience")}>
         {experience.map((e, i) => (
@@ -293,73 +343,7 @@ export default function Home() {
         ))}
       </Section>
 
-      {/* Tutoring */}
-      <Section title={t("home.tutoring")}>
-        <p style={{ ...secondary, marginBottom: "0.5rem" }}>{tutoring.tagline}</p>
-
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginTop: "1rem" }} className="tutor-grid">
-          <div>
-            <p style={{ ...smallGray, marginBottom: "0.5rem" }}>{t("home.prep")}</p>
-            <ul style={{ margin: 0, paddingLeft: "1.1rem", ...secondary, ...small }}>
-              {tutoring.prep.map((x, i) => (
-                <li key={i} style={{ marginBottom: "0.25rem" }}>{x}</li>
-              ))}
-            </ul>
-
-            <p style={{ ...smallGray, marginTop: "1rem", marginBottom: "0.5rem" }}>{t("home.university")}</p>
-            <p style={{ ...secondary, ...small, margin: 0 }}>{tutoring.uniCourses.join(" · ")}</p>
-          </div>
-
-          <div>
-            <p style={{ ...smallGray, marginBottom: "0.5rem" }}>{t("home.myScores")}</p>
-            <ul style={{ margin: 0, paddingLeft: "1.1rem", ...secondary, ...small }}>
-              {tutoring.myScores.map((x, i) => (
-                <li key={i} style={{ marginBottom: "0.25rem" }}>{x}</li>
-              ))}
-            </ul>
-
-            <p style={{ ...smallGray, marginTop: "1rem", marginBottom: "0.5rem" }}>{t("home.studentOutcomes")}</p>
-            <ul style={{ margin: 0, paddingLeft: "1.1rem", ...secondary, ...small }}>
-              {tutoring.studentResults.map((x, i) => (
-                <li key={i} style={{ marginBottom: "0.25rem" }}>{x}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <p style={{ ...tertiary, fontSize: "0.9375rem", marginTop: "1rem" }}>{tutoring.note}</p>
-
-        <p style={{ fontSize: "0.9375rem", marginTop: "0.75rem" }}>
-          <a href={tutoring.contacts.telegramUrl} target="_blank" rel="noopener noreferrer">
-            TG {tutoring.contacts.telegramHandle}
-          </a>
-          {" / "}
-          <a href={tutoring.contacts.whatsappUrl} target="_blank" rel="noopener noreferrer">{t("common.whatsapp")}</a>
-          {" / "}
-          <span style={tertiary}>{tutoring.contacts.phone}</span>
-        </p>
-
-        <div style={{ marginTop: "1.5rem" }}>
-          <p style={{ ...smallGray, marginBottom: "0.25rem" }}>{t("home.reviews")}</p>
-          <p style={{ ...tertiary, fontSize: "0.9375rem", margin: 0, marginBottom: "0.75rem" }}>
-            {t("home.reviewsHint")}
-          </p>
-          <div className="reviews-grid">
-            {reviewImages.map((img, i) => (
-              <button
-                key={i}
-                type="button"
-                className="review-tile"
-                onClick={() => setActiveReviewIdx(i)}
-                aria-label={img.alt}
-              >
-                <img src={img.src} alt={img.alt} className="review-img" />
-                <span className="review-overlay">{t("home.reviewsHint")}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </Section>
+      <div className="mobile-only">{tutoringSection}</div>
 
       {/* Blog */}
       <Section title={t("home.writing")}>
@@ -373,7 +357,9 @@ export default function Home() {
         <div className="certificate-grid">
           {certificates.map((certificate) => (
             <a key={certificate.src} className="certificate-card" href={certificate.src} target="_blank" rel="noopener noreferrer">
-              {certificate.pdf ? <span className="certificate-pdf">PDF</span> : <img src={certificate.src} alt="" loading="lazy" />}
+              <span className="certificate-sheet">
+                <img src={certificate.preview || certificate.src} alt="" loading="lazy" />
+              </span>
               <span>{certificate.title}</span>
             </a>
           ))}
@@ -458,32 +444,29 @@ export default function Home() {
           padding-bottom: 2rem;
           align-items: start;
         }
-        .home-left {
-          position: sticky;
-          top: 3rem;
-        }
+        .home-left, .home-right { min-width: 0; }
+        .mobile-only { display: none; }
         .entry-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin-top: -.35rem; }
         .resource-links { display: flex; flex-wrap: wrap; gap: .4rem; }
         .resource-links a, .more-button {
           display: inline-flex;
-          min-height: 30px;
           align-items: center;
-          padding: .2rem .65rem;
-          border: 1px solid #b7d8f2;
-          border-radius: 999px;
-          background: #eaf5ff;
+          padding: 0;
+          border: 0;
+          background: transparent;
           color: #185f94;
           font: inherit;
-          text-decoration: none;
+          text-decoration: underline;
+          text-decoration-color: #b7d8f2;
+          text-underline-offset: 3px;
           cursor: pointer;
         }
-        .resource-links a:hover, .more-button:hover { background: #dceeff; color: #0b4f82; }
+        .resource-links a:hover, .more-button:hover { color: #0b4f82; text-decoration-color: currentColor; }
         .resource-links a:focus-visible, .more-button:focus-visible, .detail-close:focus-visible { outline: 2px solid #185f94; outline-offset: 2px; }
-        .certificate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-        .certificate-card { display: flex; flex-direction: column; gap: .4rem; color: #185f94; text-decoration: none; }
-        .certificate-card img { width: 100%; height: auto; object-fit: contain; border: 1px solid var(--divider); background: #fff; }
-        .certificate-pdf { width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--divider); background: #eaf5ff; }
-        .certificate-pdf { display: grid; place-items: center; color: var(--text-tertiary); font-weight: 600; letter-spacing: .08em; }
+        .certificate-grid { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: .1rem 0 .8rem; scrollbar-width: thin; }
+        .certificate-card { flex: 0 0 min(72%, 18rem); display: flex; flex-direction: column; gap: .45rem; color: #185f94; text-decoration: none; scroll-snap-align: start; }
+        .certificate-sheet { aspect-ratio: 4 / 3; display: grid; place-items: center; padding: .5rem; border: 1px solid var(--divider); background: #fff; }
+        .certificate-card img { display: block; width: 100%; height: 100%; object-fit: contain; }
         .detail-backdrop { position: fixed; inset: 0; z-index: 60; background: rgba(26,26,26,.28); display: flex; justify-content: flex-end; }
         .detail-drawer { width: min(720px, 92vw); height: 100%; overflow-y: auto; overscroll-behavior: contain; background: var(--bg); padding: 2rem 4rem 5rem; box-shadow: -14px 0 42px rgba(0,0,0,.12); animation: drawer-in 220ms ease-out; }
         .detail-drawer-header { padding-bottom: 1.5rem; border-bottom: 1px solid var(--divider); }
@@ -501,10 +484,11 @@ export default function Home() {
             gap: 0;
             padding-top: 3rem;
           }
-          .home-left {
-            position: static;
-          }
-          .resource-links a, .more-button, .detail-close { min-height: 44px; }
+          .desktop-only { display: none; }
+          .mobile-only { display: block; }
+          .resource-links a, .more-button { min-height: 44px; padding: .55rem 0; }
+          .detail-close { min-height: 44px; }
+          .certificate-card { flex-basis: 86%; }
           .detail-drawer { width: 100%; padding: 1.25rem 1.25rem 4rem; box-shadow: none; }
           .tutor-grid {
             grid-template-columns: 1fr !important;
@@ -518,7 +502,7 @@ export default function Home() {
         }
         .review-tile {
           background: #e8e6e1;
-          aspect-ratio: 3 / 4;
+          aspect-ratio: 4 / 3;
           overflow: hidden;
           padding: 0;
           border: 0;
@@ -606,6 +590,7 @@ export default function Home() {
           .reviews-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
           }
+          .review-tile { aspect-ratio: 3 / 4; }
           .review-overlay {
             opacity: 1;
             transform: translateY(0);
