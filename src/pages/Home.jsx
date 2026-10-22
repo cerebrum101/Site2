@@ -28,37 +28,57 @@ const Section = ({ title, children, style }) => (
   </section>
 );
 
-const DetailItem = ({ title, subtitle, url, date, line, links, details, detailLabel }) => (
-  <details className="detail-item">
-    <summary>
-      <span className="detail-summary-copy">
-        <span className="detail-title-row">
-          <span>
-            <strong>{title}</strong>
-            {subtitle && <span className="detail-subtitle"> · {subtitle}</span>}
-          </span>
-          {date && <span className="detail-date">{date}</span>}
-        </span>
-        {line && <span className="detail-line">{line}</span>}
+const InlineDetails = ({ details, links, label }) => {
+  if (!details?.length && !links?.length) return null;
+  return (
+    <details className="inline-details">
+      <summary>{label}</summary>
+      {details?.length > 0 && <ul>{details.map((item) => <li key={item}>{item}</li>)}</ul>}
+      {links?.length > 0 && (
+        <p className="inline-detail-links">
+          {links.map((link, i) => <span key={link.url}>{i > 0 && " / "}<a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></span>)}
+        </p>
+      )}
+    </details>
+  );
+};
+
+const ExperienceItem = ({ role, org, url, date, line, links, details, detailLabel }) => (
+  <div style={{ marginBottom: "1.25rem" }}>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
+      <span>
+        <strong style={{ fontWeight: 500 }}>{role}</strong>
+        {" at "}
+        {url ? <a href={url} target="_blank" rel="noopener noreferrer">{org}</a> : <span>{org}</span>}
       </span>
-      <span className="detail-trigger" aria-hidden="true">{detailLabel}<span>＋</span></span>
-    </summary>
-    <div className="detail-body">
-      {Array.isArray(details) && details.length > 0 ? (
-        <ul>{details.map((item) => <li key={item}>{item}</li>)}</ul>
-      ) : (
-        <p>{line || title}</p>
-      )}
-      {(url || (Array.isArray(links) && links.length > 0)) && (
-        <div className="detail-resources">
-          {url && <a href={url} target="_blank" rel="noopener noreferrer">website ↗</a>}
-          {links?.map((link) => (
-            <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>
-          ))}
-        </div>
-      )}
+      <span style={{ ...smallGray, whiteSpace: "nowrap" }}>{date}</span>
     </div>
-  </details>
+    <p style={{ ...secondary, ...small, marginTop: "0.2rem" }}>
+      {line}
+    </p>
+    <InlineDetails details={details} links={links} label={detailLabel} />
+  </div>
+);
+
+const ProjectItem = ({ name, url, line, details, detailLabel }) => (
+  <div style={{ marginBottom: "1.25rem" }}>
+    <span style={{ fontWeight: 500 }}>{name}</span>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        display: "inline-block",
+        marginLeft: "0.5rem",
+        fontSize: "0.8125rem",
+        color: "var(--text-tertiary)",
+      }}
+    >
+      [link]
+    </a>
+    <p style={{ ...secondary, ...small, marginTop: "0.15rem" }}>{line}</p>
+    <InlineDetails details={details} label={detailLabel} />
+  </div>
 );
 
 export default function Home() {
@@ -82,6 +102,7 @@ export default function Home() {
     reviewImages,
     certificates,
   } = getSiteData(lang);
+  const detailLabel = lang === "ru" ? "подробнее" : "more";
 
   const activeReview = useMemo(() => {
     if (activeReviewIdx == null) return null;
@@ -96,8 +117,6 @@ export default function Home() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeReview]);
-
-  const detailLabel = lang === "ru" ? "Подробнее" : "Details";
 
   /* ---- Left column: identity + short sections ---- */
   const left = (
@@ -205,7 +224,16 @@ export default function Home() {
       {/* Education */}
       <Section title={t("home.education")}>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-          {education.map((ed, i) => <DetailItem key={i} title={ed.degree} subtitle={ed.school} date={ed.date} line={ed.line} details={ed.details} links={ed.links} detailLabel={detailLabel} />)}
+          {education.map((ed, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
+              <span>
+                <strong style={{ fontWeight: 500 }}>{ed.degree}</strong>
+                {", "}
+                <span style={secondary}>{ed.school}</span>
+              </span>
+              <span style={{ ...smallGray, whiteSpace: "nowrap" }}>{ed.date}</span>
+            </div>
+          ))}
         </div>
         <div style={{ marginTop: "0.75rem" }}>
           <button
@@ -236,7 +264,15 @@ export default function Home() {
       {/* Awards */}
       <Section title={t("home.awards")}>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-          {awards.map((a, i) => <DetailItem key={i} title={a.text} date={a.year} line={a.line} details={a.details} links={a.links} detailLabel={detailLabel} />)}
+          {awards.map((a, i) => (
+            <div key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "baseline" }}>
+              <span style={{ ...smallGray, whiteSpace: "nowrap", minWidth: "3.25rem" }}>{a.year}</span>
+              <span style={{ ...secondary, ...small }}>
+                {a.text}
+                {a.links?.map((link) => <span key={link.url}> · <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></span>)}
+              </span>
+            </div>
+          ))}
         </div>
         <p style={{ ...tertiary, fontSize: "0.8125rem", marginTop: "0.75rem" }}>
           {t("home.tests")}: {tests.join(" · ")}
@@ -258,27 +294,27 @@ export default function Home() {
       {/* Experience */}
       <Section title={t("home.experience")}>
         {experience.map((e, i) => (
-          <DetailItem key={i} title={e.role} subtitle={e.org} {...e} detailLabel={detailLabel} />
+          <ExperienceItem key={i} {...e} detailLabel={detailLabel} />
         ))}
       </Section>
 
       {/* Research */}
       <Section title={t("home.research")}>
         {research.map((r, i) => (
-          <DetailItem key={i} title={r.role} subtitle={r.org} {...r} detailLabel={detailLabel} />
+          <ExperienceItem key={i} {...r} detailLabel={detailLabel} />
         ))}
       </Section>
 
       <Section title={t("home.publications")}>
         {publications.map((p, i) => (
-          <DetailItem key={i} title={p.title} subtitle={p.venue} {...p} detailLabel={detailLabel} />
+          <ExperienceItem key={i} role={p.title} org={p.venue} date={p.date} line={p.line} links={p.links} details={p.details} detailLabel={detailLabel} />
         ))}
       </Section>
 
       {/* Projects */}
       <Section title={t("home.projects")}>
         {projects.map((p, i) => (
-          <DetailItem key={i} title={p.name} {...p} detailLabel={detailLabel} />
+          <ProjectItem key={i} {...p} detailLabel={detailLabel} />
         ))}
       </Section>
 
@@ -430,13 +466,31 @@ export default function Home() {
           padding-bottom: 2rem;
           align-items: start;
         }
-        .home-left { position: static; }
+        .home-left {
+          position: sticky;
+          top: 3rem;
+        }
+        .inline-details { margin-top: -.5rem; color: var(--text-secondary); font-size: .875rem; }
+        .inline-details summary { width: max-content; color: var(--text-tertiary); cursor: pointer; text-decoration: underline; text-decoration-color: var(--divider); text-underline-offset: 3px; }
+        .inline-details summary:hover { color: var(--text); }
+        .inline-details summary:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+        .inline-details ul { margin: .55rem 0 0; padding-left: 1.1rem; }
+        .inline-details li + li { margin-top: .3rem; }
+        .inline-detail-links { margin: .5rem 0 0; }
+        .certificate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+        .certificate-card { display: flex; flex-direction: column; gap: .4rem; color: var(--text-secondary); font-size: .8rem; text-decoration: none; }
+        .certificate-card img, .certificate-pdf { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--divider); background: #e8e6e1; }
+        .certificate-pdf { display: grid; place-items: center; color: var(--text-tertiary); font-weight: 600; letter-spacing: .08em; }
         @media (max-width: 768px) {
           .home-layout {
             grid-template-columns: 1fr;
             gap: 0;
             padding-top: 3rem;
           }
+          .home-left {
+            position: static;
+          }
+          .inline-details summary { min-height: 44px; display: flex; align-items: center; }
           .tutor-grid {
             grid-template-columns: 1fr !important;
           }
@@ -533,30 +587,6 @@ export default function Home() {
         .review-modal-close:hover {
           background: rgba(0,0,0,0.5);
         }
-        .detail-item { border-bottom: 1px solid var(--divider); }
-        .detail-item:first-child { border-top: 1px solid var(--divider); }
-        .detail-item summary { list-style: none; cursor: pointer; padding: 1rem 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: start; }
-        .detail-item summary::-webkit-details-marker { display: none; }
-        .detail-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 2px; }
-        .detail-summary-copy { min-width: 0; display: block; }
-        .detail-title-row { display: flex; justify-content: space-between; gap: .75rem; align-items: baseline; }
-        .detail-title-row strong { font-weight: 560; line-height: 1.35; }
-        .detail-subtitle { color: var(--text-secondary); }
-        .detail-date { color: var(--text-tertiary); font-size: .78rem; white-space: nowrap; }
-        .detail-line { display: block; color: var(--text-secondary); font-size: .9rem; line-height: 1.55; margin-top: .25rem; }
-        .detail-trigger { color: var(--accent); font-size: .76rem; white-space: nowrap; display: flex; align-items: center; gap: .35rem; padding-top: .1rem; }
-        .detail-trigger span { font-size: 1rem; transition: transform 180ms ease; }
-        .detail-item[open] .detail-trigger span { transform: rotate(45deg); }
-        .detail-body { margin: 0 0 1rem; padding: .9rem 1rem; background: var(--accent-soft); border-left: 2px solid var(--accent); border-radius: 0 10px 10px 0; color: var(--text-secondary); font-size: .9rem; }
-        .detail-body p, .detail-body ul { margin: 0; }
-        .detail-body ul { padding-left: 1.1rem; }
-        .detail-body li + li { margin-top: .4rem; }
-        .detail-resources { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .85rem; }
-        .detail-resources a { display: inline-flex; min-height: 30px; align-items: center; padding: .2rem .6rem; border: 1px solid var(--accent-border); border-radius: 999px; text-decoration: none; font-size: .78rem; background: var(--bg); }
-        .certificate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
-        .certificate-card { display: flex; flex-direction: column; gap: .45rem; font-size: .8rem; color: var(--text-secondary); text-decoration: none; }
-        .certificate-card img, .certificate-pdf { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #e8e6e1; border: 1px solid var(--divider); }
-        .certificate-pdf { display: grid; place-items: center; font-weight: 600; letter-spacing: .08em; color: var(--text-tertiary); }
         @media (max-width: 768px) {
           .reviews-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -565,9 +595,6 @@ export default function Home() {
             opacity: 1;
             transform: translateY(0);
           }
-          .detail-item summary { min-height: 44px; grid-template-columns: 1fr; gap: .4rem; }
-          .detail-title-row { align-items: flex-start; }
-          .detail-trigger { justify-self: start; }
         }
       `}</style>
     </>
