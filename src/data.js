@@ -133,10 +133,10 @@ const DATA = {
         details: ["Designed and built both the public admissions guide and its publishing workflow from scratch.", "Reached more than 4,000 users looking for admissions information across the CIS and abroad."],
       },
       {
-        name: "marytravel.kz",
-        url: "https://marytravel.kz",
-        line: "Website for a travel company. Designed and developed end-to-end.",
-        details: ["Owned the full product process for a travel-company website, from visual design through implementation and launch."],
+        name: "astratravelgroup.kz",
+        url: "https://astratravelgroup.kz",
+        line: "Website for Astra Travel Group. Designed and developed end-to-end.",
+        details: ["Owned the full product process for the Astra Travel Group website, from visual design through implementation and launch."],
       },
     ],
     education: [
@@ -324,9 +324,9 @@ const DATA = {
         line: "Система статей про поступление за рубеж и в СНГ. 4000+ пользователей. С нуля сделал сайт и CMS.",
       },
       {
-        name: "marytravel.kz",
-        url: "https://marytravel.kz",
-        line: "Сайт для тревел-компании. Дизайн и разработка под ключ.",
+        name: "astratravelgroup.kz",
+        url: "https://astratravelgroup.kz",
+        line: "Сайт для Astra Travel Group. Дизайн и разработка под ключ.",
       },
     ],
     education: [

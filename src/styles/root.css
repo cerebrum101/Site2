@@ -6,6 +6,8 @@
   --text-secondary: #555;
   --text-tertiary: #999;
   --divider: #e0ddd8;
+  --link: #4b9bd3;
+  --link-hover: #2879b4;
 
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-size: 16px;
@@ -38,14 +40,15 @@ body {
 }
 
 a {
-  color: var(--text);
-  text-decoration-color: var(--divider);
+  color: var(--link);
+  text-decoration-color: #b7d8f2;
   text-underline-offset: 3px;
   transition: text-decoration-color 0.15s ease;
 }
 
 a:hover {
-  text-decoration-color: var(--text);
+  color: var(--link-hover);
+  text-decoration-color: currentColor;
 }
 
 ::selection {

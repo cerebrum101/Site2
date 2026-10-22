@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import {
   getSiteData,
 } from "../data";
+import { getDetailStory } from "../detailStories";
 
 const ME_PHOTO_SRC = new URL("../assets/me.jpg", import.meta.url).href;
 
 const sectionHeading = {
-  fontSize: "0.7rem",
+  fontSize: "0.9375rem",
   fontWeight: 500,
   textTransform: "uppercase",
   letterSpacing: "0.1em",
@@ -19,7 +20,7 @@ const sectionHeading = {
 const secondary = { color: "var(--text-secondary)" };
 const tertiary = { color: "var(--text-tertiary)" };
 const small = { fontSize: "0.9375rem" };
-const smallGray = { fontSize: "0.8125rem", color: "var(--text-tertiary)" };
+const smallGray = { fontSize: "0.9375rem", color: "var(--text-tertiary)" };
 
 const Section = ({ title, children, style }) => (
   <section style={{ marginBottom: "3rem", ...style }}>
@@ -28,22 +29,13 @@ const Section = ({ title, children, style }) => (
   </section>
 );
 
-const InlineDetails = ({ details, links, label }) => {
-  if (!details?.length && !links?.length) return null;
-  return (
-    <details className="inline-details">
-      <summary>{label}</summary>
-      {details?.length > 0 && <ul>{details.map((item) => <li key={item}>{item}</li>)}</ul>}
-      {links?.length > 0 && (
-        <p className="inline-detail-links">
-          {links.map((link, i) => <span key={link.url}>{i > 0 && " / "}<a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></span>)}
-        </p>
-      )}
-    </details>
-  );
+const ResourceLinks = ({ url, links }) => {
+  const resources = [...(url ? [{ label: "website", url }] : []), ...(links || [])];
+  if (!resources.length) return null;
+  return <div className="resource-links">{resources.map((link) => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div>;
 };
 
-const ExperienceItem = ({ role, org, url, date, line, links, details, detailLabel }) => (
+const ExperienceItem = ({ role, org, url, date, line, links, onOpen, detailLabel }) => (
   <div style={{ marginBottom: "1.25rem" }}>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
       <span>
@@ -56,34 +48,27 @@ const ExperienceItem = ({ role, org, url, date, line, links, details, detailLabe
     <p style={{ ...secondary, ...small, marginTop: "0.2rem" }}>
       {line}
     </p>
-    <InlineDetails details={details} links={links} label={detailLabel} />
+    <div className="entry-actions">
+      <ResourceLinks links={links} />
+      <button type="button" className="more-button" onClick={onOpen}>{detailLabel} →</button>
+    </div>
   </div>
 );
 
-const ProjectItem = ({ name, url, line, details, detailLabel }) => (
+const ProjectItem = ({ name, url, line, onOpen, detailLabel }) => (
   <div style={{ marginBottom: "1.25rem" }}>
     <span style={{ fontWeight: 500 }}>{name}</span>
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        display: "inline-block",
-        marginLeft: "0.5rem",
-        fontSize: "0.8125rem",
-        color: "var(--text-tertiary)",
-      }}
-    >
-      [link]
-    </a>
     <p style={{ ...secondary, ...small, marginTop: "0.15rem" }}>{line}</p>
-    <InlineDetails details={details} label={detailLabel} />
+    <div className="entry-actions">
+      <ResourceLinks url={url} />
+      <button type="button" className="more-button" onClick={onOpen}>{detailLabel} →</button>
+    </div>
   </div>
 );
 
 export default function Home() {
-  const [showCourses, setShowCourses] = useState(false);
   const [activeReviewIdx, setActiveReviewIdx] = useState(null);
+  const [activeDetail, setActiveDetail] = useState(null);
   const { t, i18n } = useTranslation();
   const lang = i18n.resolvedLanguage || "en";
   const {
@@ -102,7 +87,7 @@ export default function Home() {
     reviewImages,
     certificates,
   } = getSiteData(lang);
-  const detailLabel = lang === "ru" ? "подробнее" : "more";
+  const detailLabel = lang === "ru" ? "Подробнее" : "Read more";
 
   const activeReview = useMemo(() => {
     if (activeReviewIdx == null) return null;
@@ -118,6 +103,18 @@ export default function Home() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeReview]);
 
+  useEffect(() => {
+    if (!activeDetail) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    const onKeyDown = (e) => e.key === "Escape" && setActiveDetail(null);
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [activeDetail]);
+
   /* ---- Left column: identity + short sections ---- */
   const left = (
     <div>
@@ -127,7 +124,7 @@ export default function Home() {
           <div style={{ minWidth: 0, flex: 1 }}>
             <h1
               style={{
-                fontSize: "1.75rem",
+                fontSize: "0.9375rem",
                 fontWeight: 600,
                 letterSpacing: "-0.02em",
                 lineHeight: 1.2,
@@ -150,7 +147,7 @@ export default function Home() {
                 padding: "0.25rem 0.5rem",
                 borderRadius: "999px",
                 cursor: "pointer",
-                fontSize: "0.75rem",
+                fontSize: "0.9375rem",
                 color: lang === "en" ? "var(--text-primary)" : "var(--text-tertiary)",
                 fontFamily: "inherit",
                 whiteSpace: "nowrap",
@@ -168,7 +165,7 @@ export default function Home() {
                 padding: "0.25rem 0.5rem",
                 borderRadius: "999px",
                 cursor: "pointer",
-                fontSize: "0.75rem",
+                fontSize: "0.9375rem",
                 color: lang === "ru" ? "var(--text-primary)" : "var(--text-tertiary)",
                 fontFamily: "inherit",
                 whiteSpace: "nowrap",
@@ -178,7 +175,7 @@ export default function Home() {
             </button>
           </div>
         </div>
-        <p style={{ fontSize: "0.8125rem", ...tertiary }}>
+        <p style={{ fontSize: "0.9375rem", ...tertiary }}>
           <a href={`mailto:${meta.email}`}>{meta.email}</a>
           {" / "}
           <a href={meta.telegram} target="_blank" rel="noopener noreferrer">{t("common.telegram")}</a>
@@ -211,7 +208,7 @@ export default function Home() {
           onError={(e) => {
             e.target.style.display = "none";
             e.target.parentElement.innerHTML =
-              '<span style="color: var(--text-tertiary); font-size: 0.8125rem;">photo</span>';
+              '<span style="color: var(--text-tertiary); font-size: 0.9375rem;">photo</span>';
           }}
         />
       </div>
@@ -235,30 +232,8 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <div style={{ marginTop: "0.75rem" }}>
-          <button
-            onClick={() => setShowCourses(!showCourses)}
-            style={{
-              background: "none",
-              border: "none",
-              padding: 0,
-              cursor: "pointer",
-              fontSize: "0.8125rem",
-              color: "var(--text-tertiary)",
-              textDecoration: "underline",
-              textUnderlineOffset: "3px",
-              textDecorationColor: "var(--divider)",
-              fontFamily: "inherit",
-            }}
-          >
-            {showCourses ? t("home.hideCoursework") : t("home.selectedCoursework")}
-          </button>
-          {showCourses && (
-            <p style={{ ...secondary, fontSize: "0.875rem", marginTop: "0.4rem" }}>
-              {coursework.join(" · ")}
-            </p>
-          )}
-        </div>
+        <p style={{ ...tertiary, marginTop: "0.9rem", marginBottom: "0.25rem" }}>{t("home.selectedCoursework")}</p>
+        <p style={{ ...secondary, marginTop: 0 }}>{coursework.join(" · ")}</p>
       </Section>
 
       {/* Awards */}
@@ -274,7 +249,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <p style={{ ...tertiary, fontSize: "0.8125rem", marginTop: "0.75rem" }}>
+        <p style={{ ...tertiary, fontSize: "0.9375rem", marginTop: "0.75rem" }}>
           {t("home.tests")}: {tests.join(" · ")}
         </p>
       </Section>
@@ -294,27 +269,27 @@ export default function Home() {
       {/* Experience */}
       <Section title={t("home.experience")}>
         {experience.map((e, i) => (
-          <ExperienceItem key={i} {...e} detailLabel={detailLabel} />
+          <ExperienceItem key={i} {...e} detailLabel={detailLabel} onOpen={() => setActiveDetail({ ...e, title: e.role, subtitle: e.org, story: getDetailStory(lang, e.id) || getDetailStory(lang, e.role) })} />
         ))}
       </Section>
 
       {/* Research */}
       <Section title={t("home.research")}>
         {research.map((r, i) => (
-          <ExperienceItem key={i} {...r} detailLabel={detailLabel} />
+          <ExperienceItem key={i} {...r} detailLabel={detailLabel} onOpen={() => setActiveDetail({ ...r, title: r.role, subtitle: r.org, story: getDetailStory(lang, r.id) || getDetailStory(lang, r.role) })} />
         ))}
       </Section>
 
       <Section title={t("home.publications")}>
         {publications.map((p, i) => (
-          <ExperienceItem key={i} role={p.title} org={p.venue} date={p.date} line={p.line} links={p.links} details={p.details} detailLabel={detailLabel} />
+          <ExperienceItem key={i} role={p.title} org={p.venue} date={p.date} line={p.line} links={p.links} detailLabel={detailLabel} onOpen={() => setActiveDetail({ ...p, subtitle: p.venue, story: getDetailStory(lang, p.id) || getDetailStory(lang, p.title) })} />
         ))}
       </Section>
 
       {/* Projects */}
       <Section title={t("home.projects")}>
         {projects.map((p, i) => (
-          <ProjectItem key={i} {...p} detailLabel={detailLabel} />
+          <ProjectItem key={i} {...p} detailLabel={detailLabel} onOpen={() => setActiveDetail({ ...p, title: p.name, subtitle: "Project", links: [{ label: "website", url: p.url }], story: getDetailStory(lang, p.id) || getDetailStory(lang, p.name) })} />
         ))}
       </Section>
 
@@ -352,9 +327,9 @@ export default function Home() {
           </div>
         </div>
 
-        <p style={{ ...tertiary, fontSize: "0.8125rem", marginTop: "1rem" }}>{tutoring.note}</p>
+        <p style={{ ...tertiary, fontSize: "0.9375rem", marginTop: "1rem" }}>{tutoring.note}</p>
 
-        <p style={{ fontSize: "0.875rem", marginTop: "0.75rem" }}>
+        <p style={{ fontSize: "0.9375rem", marginTop: "0.75rem" }}>
           <a href={tutoring.contacts.telegramUrl} target="_blank" rel="noopener noreferrer">
             TG {tutoring.contacts.telegramHandle}
           </a>
@@ -366,7 +341,7 @@ export default function Home() {
 
         <div style={{ marginTop: "1.5rem" }}>
           <p style={{ ...smallGray, marginBottom: "0.25rem" }}>{t("home.reviews")}</p>
-          <p style={{ ...tertiary, fontSize: "0.8125rem", margin: 0, marginBottom: "0.75rem" }}>
+          <p style={{ ...tertiary, fontSize: "0.9375rem", margin: 0, marginBottom: "0.75rem" }}>
             {t("home.reviewsHint")}
           </p>
           <div className="reviews-grid">
@@ -398,7 +373,7 @@ export default function Home() {
         <div className="certificate-grid">
           {certificates.map((certificate) => (
             <a key={certificate.src} className="certificate-card" href={certificate.src} target="_blank" rel="noopener noreferrer">
-              {certificate.pdf ? <span className="certificate-pdf">PDF</span> : <img src={certificate.src} alt="" />}
+              {certificate.pdf ? <span className="certificate-pdf">PDF</span> : <img src={certificate.src} alt="" loading="lazy" />}
               <span>{certificate.title}</span>
             </a>
           ))}
@@ -435,6 +410,23 @@ export default function Home() {
         </div>
       )}
 
+      {activeDetail && (
+        <div className="detail-backdrop" role="presentation" onClick={() => setActiveDetail(null)}>
+          <article className="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title" onClick={(e) => e.stopPropagation()}>
+            <header className="detail-drawer-header">
+              <button type="button" className="detail-close" onClick={() => setActiveDetail(null)} aria-label={t("home.close")}>Close</button>
+              <p className="detail-meta">{activeDetail.date}{activeDetail.subtitle ? ` · ${activeDetail.subtitle}` : ""}</p>
+              <h2 id="detail-title">{activeDetail.title}</h2>
+              <p className="detail-lede">{activeDetail.line}</p>
+              <ResourceLinks links={activeDetail.links} />
+            </header>
+            <div className="detail-article">
+              {(activeDetail.story?.length ? activeDetail.story : activeDetail.details || [activeDetail.line]).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+            </div>
+          </article>
+        </div>
+      )}
+
       {/* Footer */}
       <footer
         style={{
@@ -442,7 +434,7 @@ export default function Home() {
           paddingTop: "1.5rem",
           paddingBottom: "3rem",
           marginTop: "1rem",
-          fontSize: "0.8125rem",
+          fontSize: "0.9375rem",
           color: "var(--text-tertiary)",
         }}
       >
@@ -470,17 +462,39 @@ export default function Home() {
           position: sticky;
           top: 3rem;
         }
-        .inline-details { margin-top: -.5rem; color: var(--text-secondary); font-size: .875rem; }
-        .inline-details summary { width: max-content; color: var(--text-tertiary); cursor: pointer; text-decoration: underline; text-decoration-color: var(--divider); text-underline-offset: 3px; }
-        .inline-details summary:hover { color: var(--text); }
-        .inline-details summary:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
-        .inline-details ul { margin: .55rem 0 0; padding-left: 1.1rem; }
-        .inline-details li + li { margin-top: .3rem; }
-        .inline-detail-links { margin: .5rem 0 0; }
+        .entry-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin-top: -.35rem; }
+        .resource-links { display: flex; flex-wrap: wrap; gap: .4rem; }
+        .resource-links a, .more-button {
+          display: inline-flex;
+          min-height: 30px;
+          align-items: center;
+          padding: .2rem .65rem;
+          border: 1px solid #b7d8f2;
+          border-radius: 999px;
+          background: #eaf5ff;
+          color: #185f94;
+          font: inherit;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        .resource-links a:hover, .more-button:hover { background: #dceeff; color: #0b4f82; }
+        .resource-links a:focus-visible, .more-button:focus-visible, .detail-close:focus-visible { outline: 2px solid #185f94; outline-offset: 2px; }
         .certificate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-        .certificate-card { display: flex; flex-direction: column; gap: .4rem; color: var(--text-secondary); font-size: .8rem; text-decoration: none; }
-        .certificate-card img, .certificate-pdf { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--divider); background: #e8e6e1; }
+        .certificate-card { display: flex; flex-direction: column; gap: .4rem; color: #185f94; text-decoration: none; }
+        .certificate-card img { width: 100%; height: auto; object-fit: contain; border: 1px solid var(--divider); background: #fff; }
+        .certificate-pdf { width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--divider); background: #eaf5ff; }
         .certificate-pdf { display: grid; place-items: center; color: var(--text-tertiary); font-weight: 600; letter-spacing: .08em; }
+        .detail-backdrop { position: fixed; inset: 0; z-index: 60; background: rgba(26,26,26,.28); display: flex; justify-content: flex-end; }
+        .detail-drawer { width: min(720px, 92vw); height: 100%; overflow-y: auto; overscroll-behavior: contain; background: var(--bg); padding: 2rem 4rem 5rem; box-shadow: -14px 0 42px rgba(0,0,0,.12); animation: drawer-in 220ms ease-out; }
+        .detail-drawer-header { padding-bottom: 1.5rem; border-bottom: 1px solid var(--divider); }
+        .detail-close { min-height: 30px; padding: .2rem .65rem; border: 1px solid #b7d8f2; border-radius: 999px; background: #eaf5ff; color: #185f94; font: inherit; cursor: pointer; }
+        .detail-meta { color: var(--text-tertiary); margin: 1.5rem 0 .3rem; }
+        .detail-drawer h2 { font-size: inherit; line-height: inherit; margin: 0 0 .75rem; }
+        .detail-lede { color: var(--text-secondary); margin-bottom: 1rem; }
+        .detail-article { max-width: 42rem; padding-top: 1.3rem; color: var(--text-secondary); }
+        .detail-article p { margin: 0 0 1.2rem; }
+        @keyframes drawer-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @media (prefers-reduced-motion: reduce) { .detail-drawer { animation: none; } }
         @media (max-width: 768px) {
           .home-layout {
             grid-template-columns: 1fr;
@@ -490,7 +504,8 @@ export default function Home() {
           .home-left {
             position: static;
           }
-          .inline-details summary { min-height: 44px; display: flex; align-items: center; }
+          .resource-links a, .more-button, .detail-close { min-height: 44px; }
+          .detail-drawer { width: 100%; padding: 1.25rem 1.25rem 4rem; box-shadow: none; }
           .tutor-grid {
             grid-template-columns: 1fr !important;
           }
@@ -527,7 +542,7 @@ export default function Home() {
           right: 0;
           bottom: 0;
           padding: 0.5rem 0.6rem;
-          font-size: 0.75rem;
+          font-size: 0.9375rem;
           color: rgba(255,255,255,0.92);
           background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0));
           text-align: left;
@@ -580,7 +595,7 @@ export default function Home() {
           border: 1px solid rgba(255,255,255,0.25);
           background: rgba(0,0,0,0.35);
           color: rgba(255,255,255,0.9);
-          font-size: 22px;
+          font-size: 0.9375rem;
           line-height: 1;
           cursor: pointer;
         }
