@@ -15,18 +15,37 @@ const DATA = {
     },
     now:
       "Research Assistant at INMET, working with Prof. Yanwei Wang on Fourier Neural Operators for engineering PDEs. " +
-      "Recently presented this work at AIDME-2026 after a summer research visit to Ghent University. " +
+      "Presented this work at AIDME-2026 and published an abstract in the CMAI 2026 Book of Abstracts. " +
+      "Member of the AI Leadership Program community, a joint 01.AI, Q.AI, and Alem.ai initiative under Kai-Fu Lee's mentorship. " +
       "Education Consultant at BI Education, building AI-driven lessons for UNT preparation. " +
       "Organizing committee member at Beyond Curriculum, running international contests with 2000+ participants.",
     experience: [
       {
-        role: "Education Consultant",
-        org: "BI Education",
-        url: "https://aitanym.kz",
-        date: "Jan 2026 – Present",
-        line: "Tuning AI personalized learning algorithms; created 500+ practice problems and 10+ adaptive lessons for UNT prep.",
+        id: "ai-leadership-program",
+        role: "Community Member",
+        org: "AI Leadership Program — 01.AI × Q.AI × Alem.ai",
+        date: "2026 – Present",
+        line: "Selected for a small AI leadership cohort launched at Digital Bridge and joined its continuing community under Kai-Fu Lee's mentorship.",
+        details: [
+          "Selected as one of approximately 30 participants from a pool of roughly 137 applicants.",
+          "The program was introduced at Digital Bridge, where the cohort met Kai-Fu Lee and received signed certificates.",
+        ],
+        links: [{ label: "certificate", url: "/certificates/ai-leadership-program-kai-fu-lee.jpg" }],
       },
       {
+        id: "aitanym",
+        role: "Education Consultant",
+        org: "Aitanym.kz — a BI Education project",
+        url: "https://aitanym.kz",
+        date: "Jan 2026 – Present",
+        line: "Developing AI-personalized learning content; created 1,500+ practice problems and 30+ lessons for UNT preparation.",
+        details: [
+          "Creates structured practice content and lessons for the Aitanym.kz learning product.",
+          "Works on AI-personalized learning flows for UNT preparation.",
+        ],
+      },
+      {
+        id: "ghent-fno",
         role: "Organizing Committee Member",
         org: "Beyond Curriculum",
         url: "https://www.bc-pf.org",
@@ -34,6 +53,7 @@ const DATA = {
         line: "Organized 5 international contests (2000+ participants, 4 countries). Managed $20k+ budgets, 130-person teams, and partner communications with Chevron, Air Astana, Nazarbayev Foundation.",
       },
       {
+        id: "inmet-fno",
         role: "Math Track Lead",
         org: "Olscience Circles",
         date: "May – Nov 2023",
@@ -65,11 +85,33 @@ const DATA = {
         org: "INMET — Center of Digital Modelling and AI in Energy",
         date: "Jan 2026 – Present",
         line:
-          "Continuing FNO research with Prof. Yanwei Wang for engineering PDEs. Presented “Fourier Neural Operators for Engineering PDEs” at AIDME-2026 on August 7, 2026. " +
+          "Continuing FNO research with Prof. Yanwei Wang for engineering PDEs. Presented the poster “Fourier Neural Operators for Engineering PDEs” at AIDME-2026, August 5–8, 2026. " +
           "The reproducible 1D heat-conduction study shows why low in-distribution field error alone is insufficient: derivative, balance, and structured out-of-distribution checks expose substantially larger errors.",
         links: [
           { label: "poster", url: "/aidme-2026-fno-poster.pdf" },
           { label: "detailed report", url: "/aidme-2026-fno-report.pdf" },
+          { label: "certificate", url: "/certificates/aidme-2026-atay-kim.pdf" },
+        ],
+        details: [
+          "Certificate no. AIDME-2026-PP20 records the successful poster presentation at Nazarbayev University.",
+          "The benchmark evaluates field, derivative, balance, and structured out-of-distribution errors rather than relying on in-distribution field error alone.",
+        ],
+      },
+    ],
+    publications: [
+      {
+        id: "cmai-2026-abstract",
+        title: "Fourier-Mode Allocation and Physical Error in a One-Dimensional Heat Problem",
+        venue: "CMAI 2026 Book of Abstracts",
+        date: "2026",
+        line: "Published conference abstract, page 31. Book of Abstracts, 69 pages; ISBN 978-601-08-6470-2.",
+        details: [
+          "Published as Kim A. in the Book of Abstracts for the 1st International Conference and Workshop on Mathematics and Artificial Intelligence.",
+          "Presented as a session talk at Nazarbayev University in Astana during September 9–11, 2026.",
+        ],
+        links: [
+          { label: "abstract book", url: "https://drive.google.com/file/d/1_hBOrf6kElwsAeEzQRixVwAmL3TzuB2Q/view" },
+          { label: "talk certificate", url: "/certificates/cmai-2026-talk.jpg" },
         ],
       },
     ],
@@ -112,6 +154,7 @@ const DATA = {
       "Programming Fundamentals",
     ],
     awards: [
+      { year: "2026", text: "Republican Student Subject Olympiad in Mathematics — Honorable Mention, Nazarbayev University" },
       { year: "2024", text: "City University of Hong Kong — USD 80,000+ full-tuition scholarship offer" },
       { year: "2024", text: "Türkiye Bursları — full-ride stipend to Yıldız Technical University, Istanbul" },
       { year: "2022", text: "International Youth Math Contest — Silver Medal, best result from Kazakhstan" },
@@ -120,6 +163,13 @@ const DATA = {
       { year: "2021", text: "American Math Competition (AMC 10) — 1st Place" },
     ],
     tests: ["SAT 1480 (Math 800)", "NUET 181", "UNT 120"],
+    certificates: [
+      { title: "AI Leadership Program", src: "/certificates/ai-leadership-program-kai-fu-lee.jpg" },
+      { title: "AIDME-2026 poster presentation", src: "/certificates/aidme-2026-atay-kim.pdf", pdf: true },
+      { title: "CMAI 2026 session talk", src: "/certificates/cmai-2026-talk.jpg" },
+      { title: "Republican Olympiad — Honorable Mention", src: "/certificates/republican-olympiad-honorable-mention.jpg" },
+      { title: "Republican Olympiad — Letter of Commendation", src: "/certificates/republican-olympiad-commendation.jpg" },
+    ],
     skills: {
       stack: "Python, JavaScript, React, TypeScript, Next.js, HTML/CSS",
       tools: "Figma, Photoshop, Illustrator, LaTeX, MATLAB, Office 365",
@@ -170,18 +220,31 @@ const DATA = {
     },
     now:
       "Research Assistant в INMET: вместе с Prof. Yanwei Wang исследую Fourier Neural Operators для инженерных PDE. " +
-      "Недавно представил эту работу на AIDME-2026 после летней исследовательской стажировки в Ghent University. " +
+      "Представил эту работу на AIDME-2026 и опубликовал абстракт в сборнике CMAI 2026. " +
+      "Участник сообщества AI Leadership Program — совместной инициативы 01.AI, Q.AI и Alem.ai под менторством Kai-Fu Lee. " +
       "Education Consultant в BI Education: делаю AI-уроки и задания для подготовки к ЕНТ. " +
       "Оргкомитет Beyond Curriculum: провожу международные контесты (2000+ участников).",
     experience: [
       {
-        role: "Education Consultant",
-        org: "BI Education",
-        url: "https://aitanym.kz",
-        date: "янв 2026 – н.в.",
-        line: "Настраиваю алгоритмы персонализированного обучения; сделал 500+ задач и 10+ адаптивных уроков для подготовки к ЕНТ.",
+        id: "ai-leadership-program",
+        role: "Участник сообщества",
+        org: "AI Leadership Program — 01.AI × Q.AI × Alem.ai",
+        date: "2026 – н.в.",
+        line: "Отобран в небольшую AI leadership-когорту, запущенную на Digital Bridge, и вошёл в постоянное сообщество под менторством Kai-Fu Lee.",
+        details: ["Отобран примерно в число 30 участников из около 137 заявок.", "На Digital Bridge участники встретились с Kai-Fu Lee и получили подписанные сертификаты."],
+        links: [{ label: "сертификат", url: "/certificates/ai-leadership-program-kai-fu-lee.jpg" }],
       },
       {
+        id: "aitanym",
+        role: "Education Consultant",
+        org: "Aitanym.kz — проект BI Education",
+        url: "https://aitanym.kz",
+        date: "янв 2026 – н.в.",
+        line: "Разрабатываю AI-персонализированный учебный контент; создал 1500+ задач и 30+ уроков для подготовки к ЕНТ.",
+        details: ["Создаю структурированные задания и уроки для продукта Aitanym.kz.", "Работаю над AI-персонализированными учебными сценариями для подготовки к ЕНТ."],
+      },
+      {
+        id: "ghent-fno",
         role: "Член оргкомитета",
         org: "Beyond Curriculum",
         url: "https://www.bc-pf.org",
@@ -189,6 +252,7 @@ const DATA = {
         line: "Организовал 5 международных контестов (2000+ участников, 4 страны). Управлял бюджетом $20k+, командами 130 человек и коммуникацией с партнёрами (Chevron, Air Astana, Nazarbayev Foundation).",
       },
       {
+        id: "inmet-fno",
         role: "Лид направления по математике",
         org: "Olscience Circles",
         date: "май – ноя 2023",
@@ -220,12 +284,25 @@ const DATA = {
         org: "INMET — Center of Digital Modelling and AI in Energy",
         date: "янв 2026 – н.в.",
         line:
-          "Продолжаю исследование FNO для инженерных PDE вместе с Prof. Yanwei Wang. 7 августа 2026 представил постер “Fourier Neural Operators for Engineering PDEs” на AIDME-2026. " +
+          "Продолжаю исследование FNO для инженерных PDE вместе с Prof. Yanwei Wang. Представил постер “Fourier Neural Operators for Engineering PDEs” на AIDME-2026, 5–8 августа 2026. " +
           "Воспроизводимый 1D benchmark теплопроводности показывает, почему низкой in-distribution ошибки поля недостаточно: проверки производных, баланса и structured OOD выявляют значительно большие ошибки.",
         links: [
           { label: "постер", url: "/aidme-2026-fno-poster.pdf" },
           { label: "подробный отчёт", url: "/aidme-2026-fno-report.pdf" },
+          { label: "сертификат", url: "/certificates/aidme-2026-atay-kim.pdf" },
         ],
+        details: ["Сертификат № AIDME-2026-PP20 подтверждает постерную презентацию в Nazarbayev University.", "Benchmark оценивает ошибки поля, производных, баланса и structured OOD, а не только in-distribution ошибку поля."],
+      },
+    ],
+    publications: [
+      {
+        id: "cmai-2026-abstract",
+        title: "Fourier-Mode Allocation and Physical Error in a One-Dimensional Heat Problem",
+        venue: "Сборник абстрактов CMAI 2026",
+        date: "2026",
+        line: "Опубликованный конференционный абстракт, стр. 31. Сборник на 69 страниц; ISBN 978-601-08-6470-2.",
+        details: ["Опубликован как Kim A. в сборнике 1st International Conference and Workshop on Mathematics and Artificial Intelligence.", "Представлен в формате доклада в Nazarbayev University, Астана, 9–11 сентября 2026."],
+        links: [{ label: "сборник", url: "https://drive.google.com/file/d/1_hBOrf6kElwsAeEzQRixVwAmL3TzuB2Q/view" }, { label: "сертификат", url: "/certificates/cmai-2026-talk.jpg" }],
       },
     ],
     projects: [
@@ -267,6 +344,7 @@ const DATA = {
       "Основы программирования",
     ],
     awards: [
+      { year: "2026", text: "Республиканская студенческая предметная олимпиада по математике — Honorable Mention, Nazarbayev University" },
       { year: "2024", text: "City University of Hong Kong — оффер на полную оплату обучения (USD 80,000+)" },
       { year: "2024", text: "Türkiye Bursları — полное финансирование в Yıldız Technical University, Istanbul" },
       { year: "2022", text: "International Youth Math Contest — серебро, лучший результат из Казахстана" },
@@ -275,6 +353,13 @@ const DATA = {
       { year: "2021", text: "American Math Competition (AMC 10) — 1 место" },
     ],
     tests: ["SAT 1480 (Math 800)", "NUET 181", "ЕНТ 120"],
+    certificates: [
+      { title: "AI Leadership Program", src: "/certificates/ai-leadership-program-kai-fu-lee.jpg" },
+      { title: "Постерная презентация AIDME-2026", src: "/certificates/aidme-2026-atay-kim.pdf", pdf: true },
+      { title: "Доклад CMAI 2026", src: "/certificates/cmai-2026-talk.jpg" },
+      { title: "Республиканская олимпиада — Honorable Mention", src: "/certificates/republican-olympiad-honorable-mention.jpg" },
+      { title: "Республиканская олимпиада — рекомендательное письмо", src: "/certificates/republican-olympiad-commendation.jpg" },
+    ],
     skills: {
       stack: "Python, JavaScript, React, TypeScript, Next.js, HTML/CSS",
       tools: "Figma, Photoshop, Illustrator, LaTeX, MATLAB, Office 365",

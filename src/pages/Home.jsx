@@ -28,7 +28,7 @@ const Section = ({ title, children, style }) => (
   </section>
 );
 
-const ExperienceItem = ({ role, org, url, date, line, links }) => (
+const ExperienceItem = ({ role, org, url, date, line, links, details, onOpen }) => (
   <div style={{ marginBottom: "1.25rem" }}>
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem" }}>
       <span>
@@ -52,6 +52,9 @@ const ExperienceItem = ({ role, org, url, date, line, links }) => (
             </span>
           ))}
         </>
+      )}
+      {Array.isArray(details) && details.length > 0 && (
+        <> {" / "}<button type="button" className="detail-link" onClick={onOpen}>more</button></>
       )}
     </p>
   </div>
@@ -80,6 +83,7 @@ const ProjectItem = ({ name, url, line }) => (
 export default function Home() {
   const [showCourses, setShowCourses] = useState(false);
   const [activeReviewIdx, setActiveReviewIdx] = useState(null);
+  const [activeDetail, setActiveDetail] = useState(null);
   const { t, i18n } = useTranslation();
   const lang = i18n.resolvedLanguage || "en";
   const {
@@ -87,6 +91,7 @@ export default function Home() {
     now,
     experience,
     research,
+    publications,
     projects,
     education,
     coursework,
@@ -95,6 +100,7 @@ export default function Home() {
     skills,
     tutoring,
     reviewImages,
+    certificates,
   } = getSiteData(lang);
 
   const activeReview = useMemo(() => {
@@ -110,6 +116,13 @@ export default function Home() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeReview]);
+
+  useEffect(() => {
+    if (!activeDetail) return undefined;
+    const onKeyDown = (e) => e.key === "Escape" && setActiveDetail(null);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [activeDetail]);
 
   /* ---- Left column: identity + short sections ---- */
   const left = (
@@ -284,14 +297,20 @@ export default function Home() {
       {/* Experience */}
       <Section title={t("home.experience")}>
         {experience.map((e, i) => (
-          <ExperienceItem key={i} {...e} />
+          <ExperienceItem key={i} {...e} onOpen={() => setActiveDetail(e)} />
         ))}
       </Section>
 
       {/* Research */}
       <Section title={t("home.research")}>
         {research.map((r, i) => (
-          <ExperienceItem key={i} {...r} />
+          <ExperienceItem key={i} {...r} onOpen={() => setActiveDetail(r)} />
+        ))}
+      </Section>
+
+      <Section title={t("home.publications")}>
+        {publications.map((p, i) => (
+          <ExperienceItem key={i} role={p.title} org={p.venue} date={p.date} line={p.line} links={p.links} details={p.details} onOpen={() => setActiveDetail(p)} />
         ))}
       </Section>
 
@@ -377,6 +396,17 @@ export default function Home() {
           <Link to="/blog">{t("home.readBlog")}</Link>.
         </p>
       </Section>
+
+      <Section title={t("home.certificates")}>
+        <div className="certificate-grid">
+          {certificates.map((certificate) => (
+            <a key={certificate.src} className="certificate-card" href={certificate.src} target="_blank" rel="noopener noreferrer">
+              {certificate.pdf ? <span className="certificate-pdf">PDF</span> : <img src={certificate.src} alt="" />}
+              <span>{certificate.title}</span>
+            </a>
+          ))}
+        </div>
+      </Section>
     </div>
   );
 
@@ -405,6 +435,20 @@ export default function Home() {
             </button>
             <img src={activeReview.src} alt={activeReview.alt} className="review-modal-img" />
           </div>
+        </div>
+      )}
+
+      {activeDetail && (
+        <div className="detail-backdrop" role="dialog" aria-modal="true" onClick={() => setActiveDetail(null)}>
+          <article className="detail-panel" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="detail-close" onClick={() => setActiveDetail(null)} aria-label={t("home.close")}>×</button>
+            <p className="detail-kicker">{activeDetail.date}</p>
+            <h2>{activeDetail.title || activeDetail.role}</h2>
+            <p className="detail-org">{activeDetail.venue || activeDetail.org}</p>
+            <p>{activeDetail.line}</p>
+            <ul>{activeDetail.details?.map((item) => <li key={item}>{item}</li>)}</ul>
+            <p>{activeDetail.links?.map((link, i) => <span key={link.url}>{i > 0 && " / "}<a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></span>)}</p>
+          </article>
         </div>
       )}
 
@@ -548,6 +592,17 @@ export default function Home() {
         .review-modal-close:hover {
           background: rgba(0,0,0,0.5);
         }
+        .detail-link { border: 0; padding: 0; background: none; color: var(--text); text-decoration: underline; text-decoration-color: var(--divider); text-underline-offset: 3px; font: inherit; cursor: pointer; }
+        .detail-backdrop { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.36); display: flex; justify-content: flex-end; }
+        .detail-panel { position: relative; width: min(520px, 100%); height: 100%; overflow: auto; padding: 4rem 3rem; background: var(--bg); box-shadow: -12px 0 40px rgba(0,0,0,.12); }
+        .detail-panel h2 { font-size: 1.6rem; line-height: 1.25; margin: .35rem 0 .2rem; }
+        .detail-panel li { margin-bottom: .75rem; color: var(--text-secondary); }
+        .detail-kicker, .detail-org { color: var(--text-tertiary); font-size: .85rem; }
+        .detail-close { position: absolute; top: 1rem; right: 1rem; border: 1px solid var(--divider); border-radius: 999px; width: 36px; height: 36px; background: transparent; font-size: 22px; cursor: pointer; }
+        .certificate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+        .certificate-card { display: flex; flex-direction: column; gap: .45rem; font-size: .8rem; color: var(--text-secondary); text-decoration: none; }
+        .certificate-card img, .certificate-pdf { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #e8e6e1; border: 1px solid var(--divider); }
+        .certificate-pdf { display: grid; place-items: center; font-weight: 600; letter-spacing: .08em; color: var(--text-tertiary); }
         @media (max-width: 768px) {
           .reviews-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -556,6 +611,7 @@ export default function Home() {
             opacity: 1;
             transform: translateY(0);
           }
+          .detail-panel { width: 100%; padding: 4rem 1.25rem 2rem; box-shadow: none; }
         }
       `}</style>
     </>
