@@ -114,7 +114,7 @@ const DATA = {
           "Presented as a session talk at Nazarbayev University in Astana during September 9–11, 2026.",
         ],
         links: [
-          { label: "abstract book", url: "https://drive.google.com/file/d/1_hBOrf6kElwsAeEzQRixVwAmL3TzuB2Q/view" },
+          { label: "abstract book", url: "https://issai.nu.edu.kz/wp-content/uploads/2026/09/CMAI_2026_Book_of_Abstracts_ISBN.pdf" },
           { label: "talk certificate", url: "/certificates/cmai-2026-talk-clean.jpg" },
         ],
       },
@@ -309,7 +309,7 @@ const DATA = {
         date: "2026",
         line: "Опубликованный конференционный абстракт, стр. 31. Сборник на 69 страниц; ISBN 978-601-08-6470-2.",
         details: ["Опубликован как Kim A. в сборнике 1st International Conference and Workshop on Mathematics and Artificial Intelligence.", "Представлен в формате доклада в Nazarbayev University, Астана, 9–11 сентября 2026."],
-        links: [{ label: "сборник", url: "https://drive.google.com/file/d/1_hBOrf6kElwsAeEzQRixVwAmL3TzuB2Q/view" }, { label: "сертификат", url: "/certificates/cmai-2026-talk-clean.jpg" }],
+        links: [{ label: "сборник", url: "https://issai.nu.edu.kz/wp-content/uploads/2026/09/CMAI_2026_Book_of_Abstracts_ISBN.pdf" }, { label: "сертификат", url: "/certificates/cmai-2026-talk-clean.jpg" }],
       },
     ],
     projects: [
